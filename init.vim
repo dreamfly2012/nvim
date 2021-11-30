@@ -23,6 +23,7 @@ set cmdheight=1
 set laststatus=2
 set scrolloff=10
 set expandtab
+set breakindent
 "let loaded_matchparen = 1
 set backupskip=/tmp/*,/private/tmp/*
 
