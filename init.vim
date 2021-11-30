@@ -69,7 +69,8 @@ set formatoptions+=r
 " ---------------------------------------------------------------------
 set cursorline
 "set cursorcolumn
-
+set relativenumber
+set t_Co=256
 " Set cursor line color on visual mode
 highlight Visual cterm=NONE ctermbg=236 ctermfg=NONE guibg=Grey40
 
@@ -81,10 +82,10 @@ augroup BgHighlight
   autocmd WinLeave * set nocul
 augroup END
 
-if &term =~ "screen"
-  autocmd BufEnter * if bufname("") !~ "^?[A-Za-z0-9?]*://" | silent! exe '!echo -n "\ek[`hostname`:`basename $PWD`/`basename %`]\e\\"' | endif
-  autocmd VimLeave * silent!  exe '!echo -n "\ek[`hostname`:`basename $PWD`]\e\\"'
-endif
+"if &term =~ "screen"
+"  autocmd BufEnter * if bufname("") !~ "^?[A-Za-z0-9?]*://" | silent! exe '!echo -n "\ek[`hostname`:`basename $PWD`/`basename %`]\e\\"' | endif
+"  autocmd VimLeave * silent!  exe '!echo -n "\ek[`hostname`:`basename $PWD`]\e\\"'
+"endif
 
 "}}}
 
@@ -126,16 +127,16 @@ runtime ./maps.vim
 " ---------------------------------------------------------------------
 
 " true color
-if exists("&termguicolors") && exists("&winblend")
-  syntax enable
-  set termguicolors
-  set winblend=0
-  set wildoptions=pum
-  set pumblend=5
-  set background=dark
-  colorscheme dracula
-endif
+"if exists("&termguicolors") && exists("&winblend")
+"  syntax enable
+"  set termguicolors
+"  set winblend=0
+"  set wildoptions=pum
+"  set pumblend=5
+"  set background=dark
+"endif
 
+colorscheme dracula
 "}}}
 
 " Extras "{{{
