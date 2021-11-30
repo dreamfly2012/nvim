@@ -24,7 +24,6 @@ set laststatus=2
 set scrolloff=10
 set expandtab
 "let loaded_matchparen = 1
-set shell=fish
 set backupskip=/tmp/*,/private/tmp/*
 
 " incremental substitution (neovim)
@@ -69,7 +68,8 @@ set formatoptions+=r
 " ---------------------------------------------------------------------
 set cursorline
 "set cursorcolumn
-
+set relativenumber
+set t_Co=256
 " Set cursor line color on visual mode
 highlight Visual cterm=NONE ctermbg=236 ctermfg=NONE guibg=Grey40
 
@@ -81,10 +81,10 @@ augroup BgHighlight
   autocmd WinLeave * set nocul
 augroup END
 
-if &term =~ "screen"
-  autocmd BufEnter * if bufname("") !~ "^?[A-Za-z0-9?]*://" | silent! exe '!echo -n "\ek[`hostname`:`basename $PWD`/`basename %`]\e\\"' | endif
-  autocmd VimLeave * silent!  exe '!echo -n "\ek[`hostname`:`basename $PWD`]\e\\"'
-endif
+"if &term =~ "screen"
+"  autocmd BufEnter * if bufname("") !~ "^?[A-Za-z0-9?]*://" | silent! exe '!echo -n "\ek[`hostname`:`basename $PWD`/`basename %`]\e\\"' | endif
+"  autocmd VimLeave * silent!  exe '!echo -n "\ek[`hostname`:`basename $PWD`]\e\\"'
+"endif
 
 "}}}
 
@@ -99,8 +99,6 @@ au BufNewFile,BufRead *.md set filetype=markdown
 au BufNewFile,BufRead *.mdx set filetype=markdown
 " Flow
 au BufNewFile,BufRead *.flow set filetype=javascript
-" Fish
-au BufNewFile,BufRead *.fish set filetype=fish
 
 set suffixesadd=.js,.es,.jsx,.json,.css,.less,.sass,.styl,.php,.py,.md
 
@@ -128,16 +126,16 @@ runtime ./maps.vim
 " ---------------------------------------------------------------------
 
 " true color
-if exists("&termguicolors") && exists("&winblend")
-  syntax enable
-  set termguicolors
-  set winblend=0
-  set wildoptions=pum
-  set pumblend=5
-  set background=dark
-  colorscheme dracula
-endif
+"if exists("&termguicolors") && exists("&winblend")
+"  syntax enable
+"  set termguicolors
+"  set winblend=0
+"  set wildoptions=pum
+"  set pumblend=5
+"  set background=dark
+"endif
 
+colorscheme dracula
 "}}}
 
 " Extras "{{{
