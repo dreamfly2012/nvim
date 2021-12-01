@@ -13,7 +13,7 @@ local protocol = require'vim.lsp.protocol'
 -- Use an on_attach function to only map the following keys 
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
-  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+  local function juf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
   --Enable completion triggered by <c-x><c-o>
@@ -25,7 +25,7 @@ local on_attach = function(client, bufnr)
   -- See `:help vim.lsp.*` for documentation on any of the below functions
   buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
   buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-  --buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
   buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
   --buf_set_keymap('i', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
   buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
@@ -45,7 +45,7 @@ local on_attach = function(client, bufnr)
   if client.name == 'tsserver' then
     client.resolved_capabilities.document_formatting = false
   end
-
+  
   if client.resolved_capabilities.document_formatting then
     vim.api.nvim_command [[augroup Format]]
     vim.api.nvim_command [[autocmd! * <buffer>]]
@@ -107,7 +107,7 @@ nvim_lsp.diagnosticls.setup {
     linters = {
       eslint = {
         command = 'eslint_d',
-        rootPatterns = { '.git' },
+        rootPatterns = { '.git','package.json' },
         debounce = 100,
         args = { '--stdin', '--stdin-filename', '%filepath', '--format', 'json' },
         sourceName = 'eslint_d',
@@ -135,7 +135,7 @@ nvim_lsp.diagnosticls.setup {
     formatters = {
       eslint_d = {
         command = 'eslint_d',
-        rootPatterns = { '.git' },
+        rootPatterns = { '.git','package.json' },
         args = { '--stdin', '--stdin-filename', '%filename', '--fix-to-stdout' },
         rootPatterns = { '.git' },
       },
@@ -148,8 +148,8 @@ nvim_lsp.diagnosticls.setup {
     },
     formatFiletypes = {
       css = 'prettier',
-      javascript = 'prettier',
-      javascriptreact = 'prettier',
+      javascript = 'eslint_d',
+      javascriptreact = 'eslint_d',
       json = 'prettier',
       scss = 'prettier',
       less = 'prettier',
