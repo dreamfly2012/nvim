@@ -7,6 +7,9 @@ call plug#begin()
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
 Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'junegunn/goyo.vim'
+Plug 'stsewd/light-show.vim'
+Plug 'sotte/presenting.vim'
 
 if has("nvim")
   Plug 'hoob3rt/lualine.nvim'

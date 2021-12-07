@@ -13,9 +13,8 @@ local protocol = require'vim.lsp.protocol'
 -- Use an on_attach function to only map the following keys 
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
-  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+  local function juf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
-
   --Enable completion triggered by <c-x><c-o>
   buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
@@ -23,9 +22,19 @@ local on_attach = function(client, bufnr)
   local opts = { noremap=true, silent=true }
 
   -- See `:help vim.lsp.*` for documentation on any of the below functions
+<<<<<<< HEAD
 buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
   buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
   buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+||||||| merged common ancestors
+  buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+  buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  --buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+=======
+  buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+  buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+>>>>>>> 81fde32c686823e5396ab1ad6f9123861f1c5b55
   buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
   buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
   buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
@@ -44,7 +53,7 @@ buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
   if client.name == 'tsserver' then
     client.resolved_capabilities.document_formatting = false
   end
-
+  
   if client.resolved_capabilities.document_formatting then
     vim.api.nvim_command [[augroup Format]]
     vim.api.nvim_command [[autocmd! * <buffer>]]
@@ -101,8 +110,16 @@ nvim_lsp.diagnosticls.setup {
   init_options = {
     linters = {
       eslint = {
+<<<<<<< HEAD
         command = 'eslint',
         rootPatterns = { '.git' , 'package.json', '.eslintrc.json', '.eslintrc.js', '.eslintrc.yml'},
+||||||| merged common ancestors
+        command = 'eslint_d',
+        rootPatterns = { '.git' },
+=======
+        command = 'eslint_d',
+        rootPatterns = { '.git','package.json' },
+>>>>>>> 81fde32c686823e5396ab1ad6f9123861f1c5b55
         debounce = 100,
         args = { '--stdin', '--stdin-filename', '%filepath', '--format', 'json' },
         sourceName = 'eslint',
@@ -128,9 +145,19 @@ nvim_lsp.diagnosticls.setup {
       typescriptreact = 'eslint',
     },
     formatters = {
+<<<<<<< HEAD
       eslint = {
         command = 'eslint',
         rootPatterns = { '.git','pacakage.json' },
+||||||| merged common ancestors
+      eslint_d = {
+        command = 'eslint_d',
+        rootPatterns = { '.git' },
+=======
+      eslint_d = {
+        command = 'eslint_d',
+        rootPatterns = { '.git','package.json' },
+>>>>>>> 81fde32c686823e5396ab1ad6f9123861f1c5b55
         args = { '--stdin', '--stdin-filename', '%filename', '--fix-to-stdout' },
         rootPatterns = { '.git' },
       },
@@ -143,8 +170,16 @@ nvim_lsp.diagnosticls.setup {
     },
     formatFiletypes = {
       css = 'prettier',
+<<<<<<< HEAD
       javascript = 'eslint',
       javascriptreact = 'prettier',
+||||||| merged common ancestors
+      javascript = 'prettier',
+      javascriptreact = 'prettier',
+=======
+      javascript = 'eslint_d',
+      javascriptreact = 'eslint_d',
+>>>>>>> 81fde32c686823e5396ab1ad6f9123861f1c5b55
       json = 'prettier',
       scss = 'prettier',
       less = 'prettier',
