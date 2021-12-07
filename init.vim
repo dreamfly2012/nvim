@@ -135,7 +135,7 @@ runtime ./maps.vim
 "  set pumblend=5
 "  set background=dark
 "endif
-
+let g:dracula_italic = 0
 colorscheme dracula
 "}}}
 
