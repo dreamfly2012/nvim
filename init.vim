@@ -26,7 +26,6 @@ set expandtab
 set breakindent
 "let loaded_matchparen = 1
 set backupskip=/tmp/*,/private/tmp/*
-
 " incremental substitution (neovim)
 if has('nvim')
   set inccommand=split
@@ -96,7 +95,9 @@ au BufNewFile,BufRead *.es6 setf javascript
 " TypeScript
 au BufNewFile,BufRead *.tsx setf typescriptreact
 " Markdown
+let g:markdown_fenced_languages = ['html', 'go', 'css', 'javascript', 'python', 'ruby', 'vim', 'php']
 au BufNewFile,BufRead *.md set filetype=markdown
+au BufNewFile,BufRead *.vpm set filetype=markdown
 au BufNewFile,BufRead *.mdx set filetype=markdown
 " Flow
 au BufNewFile,BufRead *.flow set filetype=javascript
@@ -135,7 +136,7 @@ runtime ./maps.vim
 "  set pumblend=5
 "  set background=dark
 "endif
-
+let g:dracula_italic = 0
 colorscheme dracula
 "}}}
 
@@ -148,5 +149,7 @@ nnoremap w- :resize -3<CR>
 nnoremap w, :vert resize -3<CR> 
 nnoremap w. :vert resize +3<CR>
 
+autocmd BufWritePre *.go lua vim.lsp.buf.formatting()
+autocmd BufWritePre *.go lua goimports(1000)
 "}}}
 " vim: set foldmethod=marker foldlevel=0:
