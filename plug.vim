@@ -10,6 +10,7 @@ Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'junegunn/goyo.vim'
 Plug 'stsewd/light-show.vim'
 Plug 'sotte/presenting.vim'
+Plug 'chr4/nginx.vim'
 
 if has("nvim")
   Plug 'hoob3rt/lualine.nvim'

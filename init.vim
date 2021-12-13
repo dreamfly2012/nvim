@@ -142,6 +142,11 @@ colorscheme dracula
 " Extras "{{{
 " ---------------------------------------------------------------------
 set exrc
+"window resize
+nnoremap w= :resize +3<CR>
+nnoremap w- :resize -3<CR>
+nnoremap w, :vert resize -3<CR> 
+nnoremap w. :vert resize +3<CR>
 
 "}}}
 " vim: set foldmethod=marker foldlevel=0:
