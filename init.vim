@@ -65,6 +65,8 @@ set formatoptions+=r
 
 "}}}
 
+runtime ./plug.vim
+runtime ./maps.vim
 " Highlights "{{{
 " ---------------------------------------------------------------------
 set cursorline
