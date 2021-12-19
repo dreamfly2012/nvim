@@ -50,7 +50,8 @@ set shiftwidth=2
 set tabstop=2
 set ai "Auto indent
 set si "Smart indent
-set nowrap "No Wrap lines
+"set nowrap "No Wrap lines
+set wrap
 set backspace=start,eol,indent
 " Finding files - Search down into subfolders
 set path+=**
@@ -110,19 +111,6 @@ autocmd FileType yaml setlocal shiftwidth=2 tabstop=2
 
 "}}}
 
-" Imports "{{{
-" ---------------------------------------------------------------------
-runtime ./plug.vim
-if has("unix")
-  let s:uname = system("uname -s")
-  " Do Mac stuff
-  if s:uname == "Darwin\n"
-    runtime ./macos.vim
-  endif
-endif
-
-runtime ./maps.vim
-"}}}
 
 " Syntax theme "{{{
 " ---------------------------------------------------------------------
