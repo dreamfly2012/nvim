@@ -11,6 +11,9 @@ Plug 'junegunn/goyo.vim'
 Plug 'stsewd/light-show.vim'
 Plug 'sotte/presenting.vim'
 Plug 'chr4/nginx.vim'
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
+Plug 'fatih/vim-go', { 'do' : 'GoUpdateBinaries' }
+Plug 'buoto/gotests-vim'
 
 if has("nvim")
   Plug 'hoob3rt/lualine.nvim'
