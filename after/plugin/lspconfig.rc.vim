@@ -123,6 +123,8 @@ nvim_lsp.tsserver.setup {
   filetypes = { "javascript","javascriptreact","javascript.tsx", "typescript", "typescriptreact", "typescript.tsx" },
   capabilities = capabilities
 }
+nvim_lsp.clangd.setup{
+}
 
 nvim_lsp.diagnosticls.setup {
   on_attach = on_attach,

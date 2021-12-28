@@ -22,6 +22,8 @@ require'nvim-treesitter.configs'.setup {
     "html",
     "scss",
     "go",
+    "c",
+    "cpp"
   },
 }
 
