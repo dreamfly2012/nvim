@@ -88,6 +88,9 @@ local capabilities = require('cmp_nvim_lsp').update_capabilities(
   vim.lsp.protocol.make_client_capabilities()
 )
 nvim_lsp.gopls.setup{
+  on_attach = on_attach,
+  filetypes = {"golang","go"},
+  capabilities = capabilities
 }
 function goimports(timeoutms)
     local context = { source = { organizeImports = true } }
@@ -124,6 +127,9 @@ nvim_lsp.tsserver.setup {
   capabilities = capabilities
 }
 nvim_lsp.clangd.setup{
+  on_attach = on_attach,
+  filetypes = { "c","cpp"},
+  capabilities = capabilities
 }
 
 nvim_lsp.diagnosticls.setup {
