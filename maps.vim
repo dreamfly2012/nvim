@@ -1,6 +1,6 @@
 " Description: Keymaps
 
-nnoremap <S-C-p> "0p
+nnoremap <S-C-p> "1p
 " Delete without yank
 nnoremap <leader>d "_d
 nnoremap x "_x
@@ -11,11 +11,6 @@ nnoremap - <C-x>
 " escape 
 imap jk <Esc>
 
-" Delete a word backwards
-nnoremap dw vb"_d
-
-" Select all
-nmap <C-a> gg<S-v>G
 
 " Save with root permission
 command! W w !sudo tee > /dev/null %

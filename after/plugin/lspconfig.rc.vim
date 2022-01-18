@@ -126,6 +126,11 @@ nvim_lsp.tsserver.setup {
   filetypes = { "javascript","javascriptreact","javascript.tsx", "typescript", "typescriptreact", "typescript.tsx" },
   capabilities = capabilities
 }
+nvim_lsp.sumneko_lua.setup{
+  on_attach = on_attach,
+  filetypes = {"lua"},
+  capabilities = capabilities
+}
 nvim_lsp.clangd.setup{
   on_attach = on_attach,
   filetypes = { "c","cpp"},
