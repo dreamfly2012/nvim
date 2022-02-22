@@ -99,9 +99,9 @@ au BufNewFile,BufRead *.es6 setf javascript
 au BufNewFile,BufRead *.tsx setf typescriptreact
 " Markdown
 let g:markdown_fenced_languages = ['html', 'go', 'css', 'javascript', 'python', 'ruby', 'vim', 'php']
-au BufNewFile,BufRead *.md set filetype=markdown
-au BufNewFile,BufRead *.vpm set filetype=markdown
-au BufNewFile,BufRead *.mdx set filetype=markdown
+au BufNewFile,BufRead *.md setf markdown
+au BufNewFile,BufRead *.vpm setf markdown
+au BufNewFile,BufRead *.mdx setf markdown
 " Flow
 au BufNewFile,BufRead *.flow set filetype=javascript
 
