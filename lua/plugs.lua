@@ -19,7 +19,7 @@ require('packer').startup(function()
 		'nvim-telescope/telescope.nvim',
 		requires = { {'nvim-lua/plenary.nvim'} }
 	}
-
+	use { 'nvim-treesitter/nvim-treesitter'}
 	use {'hrsh7th/nvim-cmp'}
 	use { 'nvim-lua/lsp-status.nvim'}
 end)
