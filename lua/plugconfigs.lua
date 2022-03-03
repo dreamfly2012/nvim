@@ -114,15 +114,24 @@ treesitter.setup {
   ensure_installed = {
     "tsx",
     "toml",
-    "fish",
     "php",
+    "go",
     "json",
     "yaml",
-    "swift",
     "html",
     "scss"
   }
 }
 
-local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
-parser_config.tsx.used_by = {"javascript", "typescript.tsx"}
+local cmp = require "cmp"
+cmp.setup {
+  mapping = {
+    ['<Tab>'] = function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      else
+        fallback()
+      end
+    end
+  }
+}
