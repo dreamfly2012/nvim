@@ -7,6 +7,12 @@ require('packer').startup(function()
 		'nvim-lualine/lualine.nvim',
 		requires = { 'kyazdani42/nvim-web-devicons', opt = true }
 	}
+    use {
+        'windwp/nvim-autopairs'
+    }
+    use {
+        'windwp/nvim-ts-autotag'
+    }
 	use {
 		'kyazdani42/nvim-tree.lua',
 		requires = {
