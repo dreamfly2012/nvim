@@ -13,6 +13,7 @@ require('packer').startup(function()
     use {
         'windwp/nvim-ts-autotag'
     }
+    use {"ellisonleao/glow.nvim"}
 	use {
 		'kyazdani42/nvim-tree.lua',
 		requires = {

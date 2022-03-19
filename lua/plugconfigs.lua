@@ -214,6 +214,7 @@ nvim_tree.setup {
     },
   },
 }
+
 local cmp = require "cmp"
 cmp.setup {
   mapping = {
