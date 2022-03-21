@@ -74,6 +74,11 @@ _G.packer_plugins = {
     path = "/home/dreamfly/.local/share/nvim/site/pack/packer/start/dracula.nvim",
     url = "https://github.com/Mofiqul/dracula.nvim"
   },
+  ["glow.nvim"] = {
+    loaded = true,
+    path = "/home/dreamfly/.local/share/nvim/site/pack/packer/start/glow.nvim",
+    url = "https://github.com/ellisonleao/glow.nvim"
+  },
   ["lsp-status.nvim"] = {
     loaded = true,
     path = "/home/dreamfly/.local/share/nvim/site/pack/packer/start/lsp-status.nvim",
@@ -93,6 +98,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/dreamfly/.local/share/nvim/site/pack/packer/start/mini.nvim",
     url = "https://github.com/echasnovski/mini.nvim"
+  },
+  ["nvim-autopairs"] = {
+    loaded = true,
+    path = "/home/dreamfly/.local/share/nvim/site/pack/packer/start/nvim-autopairs",
+    url = "https://github.com/windwp/nvim-autopairs"
   },
   ["nvim-cmp"] = {
     loaded = true,
@@ -121,6 +131,11 @@ _G.packer_plugins = {
     path = "/home/dreamfly/.local/share/nvim/site/pack/packer/start/nvim-treesitter",
     url = "https://github.com/nvim-treesitter/nvim-treesitter"
   },
+  ["nvim-ts-autotag"] = {
+    loaded = true,
+    path = "/home/dreamfly/.local/share/nvim/site/pack/packer/start/nvim-ts-autotag",
+    url = "https://github.com/windwp/nvim-ts-autotag"
+  },
   ["nvim-web-devicons"] = {
     loaded = true,
     path = "/home/dreamfly/.local/share/nvim/site/pack/packer/start/nvim-web-devicons",
@@ -141,6 +156,12 @@ _G.packer_plugins = {
     path = "/home/dreamfly/.local/share/nvim/site/pack/packer/start/popup.nvim",
     url = "https://github.com/nvim-lua/popup.nvim"
   },
+  ["rest.nvim"] = {
+    config = { "\27LJ\2\2Ÿ\2\0\0\3\0\t\0\r6\0\0\0'\1\1\0B\0\2\0029\0\2\0005\1\3\0005\2\4\0=\2\5\0015\2\6\0=\2\a\0014\2\0\0=\2\b\1B\0\2\1K\0\1\0\29custom_dynamic_variables\vresult\1\0\3\19show_http_info\2\17show_headers\2\rshow_url\2\14highlight\1\0\2\fenabled\2\ftimeout\3–\1\1\0\5\20jump_to_request\1\26skip_ssl_verification\1\28result_split_horizontal\1\renv_file\t.env\17yank_dry_run\2\nsetup\14rest-nvim\frequire\0" },
+    loaded = true,
+    path = "/home/dreamfly/.local/share/nvim/site/pack/packer/start/rest.nvim",
+    url = "https://github.com/NTBBloodbath/rest.nvim"
+  },
   ["telescope.nvim"] = {
     loaded = true,
     path = "/home/dreamfly/.local/share/nvim/site/pack/packer/start/telescope.nvim",
@@ -149,6 +170,10 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
+-- Config for: rest.nvim
+time([[Config for rest.nvim]], true)
+try_loadstring("\27LJ\2\2Ÿ\2\0\0\3\0\t\0\r6\0\0\0'\1\1\0B\0\2\0029\0\2\0005\1\3\0005\2\4\0=\2\5\0015\2\6\0=\2\a\0014\2\0\0=\2\b\1B\0\2\1K\0\1\0\29custom_dynamic_variables\vresult\1\0\3\19show_http_info\2\17show_headers\2\rshow_url\2\14highlight\1\0\2\fenabled\2\ftimeout\3–\1\1\0\5\20jump_to_request\1\26skip_ssl_verification\1\28result_split_horizontal\1\renv_file\t.env\17yank_dry_run\2\nsetup\14rest-nvim\frequire\0", "config", "rest.nvim")
+time([[Config for rest.nvim]], false)
 -- Config for: nvim-go
 time([[Config for nvim-go]], true)
 try_loadstring("\27LJ\2\0024\0\0\2\0\3\0\a6\0\0\0'\1\1\0B\0\2\0029\0\2\0004\1\0\0B\0\2\1K\0\1\0\nsetup\ago\frequire\0", "config", "nvim-go")
