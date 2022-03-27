@@ -98,6 +98,12 @@ for _, lsp in pairs(servers) do
   }
 end
 
+local pyright_server = require('lspconfig')['pyright']
+
+pyright_server.setup{
+    pythonVersion = "3.8"
+}
+
 local status, treesitter = pcall(require, "nvim-treesitter.configs")
 if (not status) then
   return
@@ -117,6 +123,7 @@ treesitter.setup {
     "php",
     "go",
     "json",
+    "python",
     "http",
     "yaml",
     "html",

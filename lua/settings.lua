@@ -9,3 +9,6 @@ vim.o.tabstop = 4
 vim.o.ai = true
 vim.o.si = true
 vim.o.cursorline = true
+vim.g.copilot_no_tab_map = true
+vim.g.copilot_assume_mapped = true
+vim.g.copilot_tab_fallback = ""

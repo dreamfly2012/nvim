@@ -11,6 +11,12 @@ require('packer').startup(function()
         'windwp/nvim-autopairs'
     }
     use {
+        'github/copilot.vim'
+    }
+    use {
+        'fatih/vim-go'
+    }
+    use {
         'windwp/nvim-ts-autotag'
     }
     use {"ellisonleao/glow.nvim"}
