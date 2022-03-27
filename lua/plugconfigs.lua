@@ -98,6 +98,12 @@ for _, lsp in pairs(servers) do
   }
 end
 
+local pyright_server = require('lspconfig')['pyright']
+
+pyright_server.setup{
+    pythonVersion = "3.8"
+}
+
 local status, treesitter = pcall(require, "nvim-treesitter.configs")
 if (not status) then
   return
@@ -118,10 +124,104 @@ treesitter.setup {
     "php",
     "go",
     "json",
+    "python",
+    "http",
     "yaml",
     "html",
     "scss"
   }
+}
+
+local nvim_tree = require 'nvim-tree'
+
+nvim_tree.setup {
+  disable_netrw        = false,
+  hijack_netrw         = true,
+  open_on_setup        = false,
+  ignore_buffer_on_setup = false,
+  ignore_ft_on_setup   = {},
+  auto_close           = false,
+  auto_reload_on_write = true,
+  open_on_tab          = false,
+  hijack_cursor        = false,
+  update_cwd           = false,
+  hijack_unnamed_buffer_when_opening = false,
+  hijack_directories   = {
+    enable = true,
+    auto_open = true,
+  },
+  diagnostics = {
+    enable = false,
+    icons = {
+      hint = "",
+      info = "",
+      warning = "",
+      error = "",
+    }
+  },
+  update_focused_file = {
+    enable      = false,
+    update_cwd  = false,
+    ignore_list = {}
+  },
+  system_open = {
+    cmd  = nil,
+    args = {}
+  },
+  filters = {
+    dotfiles = false,
+    custom = {}
+  },
+  git = {
+    enable = true,
+    ignore = true,
+    timeout = 500,
+  },
+  view = {
+    width = 30,
+    height = 30,
+    hide_root_folder = false,
+    side = 'left',
+    preserve_window_proportions = false,
+    mappings = {
+      custom_only = false,
+      list = {}
+    },
+    number = false,
+    relativenumber = false,
+    signcolumn = "yes"
+  },
+  trash = {
+    cmd = "trash",
+    require_confirm = true
+  },
+  actions = {
+    change_dir = {
+      enable = true,
+      global = false,
+    },
+    open_file = {
+      quit_on_open = false,
+      resize_window = false,
+      window_picker = {
+        enable = true,
+        chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
+        exclude = {
+          filetype = { "notify", "packer", "qf", "diff", "fugitive", "fugitiveblame", },
+          buftype  = { "nofile", "terminal", "help", },
+        }
+      }
+    }
+  },
+  log = {
+    enable = false,
+    truncate = false,
+    types = {
+      all = false,
+      config = false,
+      git = false,
+    },
+  },
 }
 
 local cmp = require "cmp"
@@ -136,3 +236,88 @@ cmp.setup {
     end
   }
 }
+local completion = require "mini.completion"
+completion.setup{
+  -- Delay (debounce type, in ms) between certain Neovim event and action.
+  -- This can be used to (virtually) disable certain automatic actions by
+  -- setting very high delay time (like 10^7).
+  delay = { completion = 100, info = 100, signature = 50 },
+
+  -- Maximum dimensions of floating windows for certain actions. Action
+  -- entry should be a table with 'height' and 'width' fields.
+  window_dimensions = {
+    info = { height = 25, width = 80 },
+    signature = { height = 25, width = 80 },
+  },
+
+  -- Way of how module does LSP completion
+  lsp_completion = {
+    -- `source_func` should be one of 'completefunc' or 'omnifunc'.
+    source_func = 'completefunc',
+
+    -- `auto_setup` should be boolean indicating if LSP completion is set up
+    -- on every `BufEnter` event.
+    auto_setup = true,
+
+    -- `process_items` should be a function which takes LSP
+    -- 'textDocument/completion' response items and word to complete. Its
+    -- output should be a table of the same nature as input items. The most
+    -- common use-cases are custom filtering and sorting. You can use
+    -- default `process_items` as `MiniCompletion.default_process_items()`.
+    -- process_items = MiniCompletion.default_process_items(),--<function: filters out snippets; sorts by LSP specs>,
+  },
+
+  -- Fallback action. It will always be run in Insert mode. To use Neovim's
+  -- built-in completion (see `:h ins-completion`), supply its mapping as
+  -- string. Example: to use 'whole lines' completion, supply '<C-x><C-l>'.
+  fallback_action = '<C-n>',--<function: like `<C-n>` completion>,
+
+  -- Module mappings. Use `''` (empty string) to disable one. Some of them
+  -- might conflict with system mappings.
+  mappings = {
+    force_twostep = '<C-Space>', -- Force two-step completion
+    force_fallback = '<A-Space>', -- Force fallback completion
+  },
+
+  -- Whether to set Vim's settings for better experience (modifies
+  -- `shortmess` and `completeopt`)
+  set_vim_settings = true,
+}
+
+local npairs = require "nvim-autopairs"
+npairs.setup({
+    fast_wrap = {
+      map = '<M-e>',
+      chars = { '{', '[', '(', '"', "'" },
+      pattern = string.gsub([[ [%'%"%)%>%]%)%}%,] ]], '%s+', ''),
+      offset = -1, -- Offset from pattern match
+      end_key = '$',
+      keys = 'qwertyuiopzxcvbnmasdfghjkl',
+      check_comma = true,
+      highlight = 'Search',
+      highlight_grey='Comment'
+    },
+})
+local rest_nvim = require("rest-nvim")
+rest_nvim.setup({
+    -- Open request results in a horizontal split
+    result_split_horizontal = false,
+    -- Skip SSL verification, useful for unknown certificates
+    skip_ssl_verification = false,
+    -- Highlight request on run
+    highlight = {
+        enabled = true,
+        timeout = 150,
+    },
+    result = {
+        -- toggle showing URL, HTTP info, headers at top the of result window
+        show_url = true,
+        show_http_info = true,
+        show_headers = true,
+    },
+    -- Jump to request line on run
+    jump_to_request = false,
+    env_file = '.env',
+    custom_dynamic_variables = {},
+    yank_dry_run = true,
+})
