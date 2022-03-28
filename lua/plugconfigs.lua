@@ -119,6 +119,8 @@ treesitter.setup {
   },
   ensure_installed = {
     "tsx",
+    "c",
+    "cpp",
     "toml",
     "php",
     "go",
