@@ -11,7 +11,14 @@ require('packer').startup(function()
         'windwp/nvim-autopairs'
     }
     use {
+        'mattn/emmet-vim'
+    }
+    use {
         'github/copilot.vim'
+    }
+    use {
+        'junegunn/fzf',
+        'junegunn/fzf.vim'
     }
     use {
         'fatih/vim-go'

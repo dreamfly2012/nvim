@@ -120,7 +120,10 @@ treesitter.setup {
   ensure_installed = {
     "tsx",
     "python",
+    "c",
+    "cpp",
     "toml",
+    "javascript",
     "php",
     "go",
     "json",
