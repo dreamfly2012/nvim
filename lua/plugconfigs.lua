@@ -122,6 +122,7 @@ treesitter.setup {
     "c",
     "cpp",
     "toml",
+    "javascript",
     "php",
     "go",
     "json",
