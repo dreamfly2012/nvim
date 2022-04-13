@@ -119,6 +119,7 @@ treesitter.setup {
   },
   ensure_installed = {
     "tsx",
+    "python",
     "c",
     "cpp",
     "toml",
@@ -134,8 +135,10 @@ treesitter.setup {
   }
 }
 
-local nvim_tree = require 'nvim-tree'
-
+local status, nvim_tree = pcall(require, "nvim-tree")
+if (not status) then
+  return
+end
 nvim_tree.setup {
   disable_netrw        = false,
   hijack_netrw         = true,
@@ -300,7 +303,11 @@ npairs.setup({
       highlight_grey='Comment'
     },
 })
-local rest_nvim = require("rest-nvim")
+
+local status, rest_nvim = pcall(require, "rest-nvim")
+if (not status) then
+  return
+end
 rest_nvim.setup({
     -- Open request results in a horizontal split
     result_split_horizontal = false,
