@@ -1,4 +1,5 @@
 vim.o.number = true
+vim.o.mouse = 'a'
 vim.o.encoding = "utf-8"
 vim.o.fileencoding = "utf-8"
 vim.o.relativenumber = true

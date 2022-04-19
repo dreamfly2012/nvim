@@ -183,11 +183,11 @@ nvim_tree.setup {
     timeout = 500,
   },
   view = {
-    width = 30,
+    width = 25,
     height = 30,
     hide_root_folder = false,
     side = 'left',
-    preserve_window_proportions = false,
+    preserve_window_proportions = true,
     mappings = {
       custom_only = false,
       list = {}
@@ -207,7 +207,7 @@ nvim_tree.setup {
     },
     open_file = {
       quit_on_open = false,
-      resize_window = false,
+      resize_window = true,
       window_picker = {
         enable = true,
         chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
@@ -228,17 +228,35 @@ nvim_tree.setup {
     },
   },
 }
-
+local luasnip = require 'luasnip'
 local cmp = require "cmp"
 cmp.setup {
-  mapping = {
-    ['<Tab>'] = function(fallback)
-      if cmp.visible() then
-        cmp.select_next_item()
-      else
+    mapping = {
+        ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+        ['<C-f>'] = cmp.mapping.scroll_docs(4),
+        ['<C-Space>'] = cmp.mapping.complete(),
+        ['<CR>'] = cmp.mapping.confirm {
+            behavior = cmp.ConfirmBehavior.Replace,
+            select = true,
+        },
+        ['<Tab>'] = function(fallback)
+            if cmp.visible() then
+                cmp.select_next_item()
+            elseif luasnip.expand_or_jumpable() then
+                luasnip.expand_or_jump()
+            else
+                fallback()
+            end
+        end,
+        ['<S-Tab>'] = function(fallback)
+            if cmp.visible() then
+                cmp.select_prev_item()
+            elseif luasnip.jumpable(-1) then
+                luasnip.jump(-1)
+            else
         fallback()
       end
-    end
+    end,
   }
 }
 local completion = require "mini.completion"
@@ -288,7 +306,10 @@ completion.setup{
   -- `shortmess` and `completeopt`)
   set_vim_settings = true,
 }
+local surround = require "mini.surround"
+surround.setup{
 
+}
 local npairs = require "nvim-autopairs"
 npairs.setup({
     fast_wrap = {
@@ -304,29 +325,3 @@ npairs.setup({
     },
 })
 
-local status, rest_nvim = pcall(require, "rest-nvim")
-if (not status) then
-  return
-end
-rest_nvim.setup({
-    -- Open request results in a horizontal split
-    result_split_horizontal = false,
-    -- Skip SSL verification, useful for unknown certificates
-    skip_ssl_verification = false,
-    -- Highlight request on run
-    highlight = {
-        enabled = true,
-        timeout = 150,
-    },
-    result = {
-        -- toggle showing URL, HTTP info, headers at top the of result window
-        show_url = true,
-        show_http_info = true,
-        show_headers = true,
-    },
-    -- Jump to request line on run
-    jump_to_request = false,
-    env_file = '.env',
-    custom_dynamic_variables = {},
-    yank_dry_run = true,
-})

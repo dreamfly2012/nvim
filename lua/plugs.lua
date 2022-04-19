@@ -27,34 +27,6 @@ require('packer').startup(function()
         'windwp/nvim-ts-autotag'
     }
     use {"ellisonleao/glow.nvim"}
-    use {
-        "NTBBloodbath/rest.nvim",
-        requires = { "nvim-lua/plenary.nvim" },
-        config = function()
-            require("rest-nvim").setup({
-                -- Open request results in a horizontal split
-                result_split_horizontal = false,
-                -- Skip SSL verification, useful for unknown certificates
-                skip_ssl_verification = false,
-                -- Highlight request on run
-                highlight = {
-                    enabled = true,
-                    timeout = 150,
-                },
-                result = {
-                    -- toggle showing URL, HTTP info, headers at top the of result window
-                    show_url = true,
-                    show_http_info = true,
-                    show_headers = true,
-                },
-                -- Jump to request line on run
-                jump_to_request = false,
-                env_file = '.env',
-                custom_dynamic_variables = {},
-                yank_dry_run = true,
-            })
-        end
-    }
 	use {
 		'kyazdani42/nvim-tree.lua',
 		requires = {
@@ -63,13 +35,14 @@ require('packer').startup(function()
 		config = function() require'nvim-tree'.setup {} end
 	}
 	use 'Mofiqul/dracula.nvim'
+    use 'L3MON4D3/LuaSnip'
 	use { 'tami5/lspsaga.nvim' }  -- nightly
 	use {
 		'nvim-telescope/telescope.nvim',
 		requires = { {'nvim-lua/plenary.nvim'} }
 	}
 	use { 'crispgm/nvim-go',
-		requires = { 
+		requires = {
 			'nvim-lua/plenary.nvim',
 			'nvim-lua/popup.nvim'
 		},
