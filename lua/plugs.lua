@@ -11,6 +11,9 @@ require('packer').startup(function()
         'windwp/nvim-autopairs'
     }
     use {
+        'godlygeek/tabular'
+    }
+    use {
         'mattn/emmet-vim'
     }
     use {
