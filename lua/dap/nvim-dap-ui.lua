@@ -22,6 +22,13 @@ dap.listeners.before.event_exited["dapui_config"] = function()
     dapui.close()
     dap.repl.close()
 end
+local function map(mode, lhs, rhs, opts)
+    local options = { noremap = true }
+    if opts then
+        options = vim.tbl_extend("force", options, opts)
+    end
+    vim.api.nvim_set_keymap(mode, lhs, rhs, options)
+end
 -- 显示或隐藏调试界面
-vim.keybinds.gmap("n", "<leader>du", "<cmd>lua require'dapui'.toggle()<CR>", vim.keybinds.opts)
+map("n", "<leader>du", "<cmd>lua require'dapui'.toggle()<CR>", {})
 
