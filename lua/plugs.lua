@@ -3,15 +3,47 @@ require('packer').startup(function()
 	use 'wbthomason/packer.nvim' -- Package manager
 	use 'neovim/nvim-lspconfig' -- Collection of configurations for the built-in LSP client
 	use { 'echasnovski/mini.nvim', branch = 'stable' }
-	use {
-		'nvim-lualine/lualine.nvim',
-		requires = { 'kyazdani42/nvim-web-devicons', opt = true }
-	}
+    use {
+        'nvim-lualine/lualine.nvim',
+        requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+    }
     use {
         'windwp/nvim-autopairs'
     }
     use {
+        "mfussenegger/nvim-dap",
+        config = function()
+            require("dap.nvim-dap")
+        end
+    }
+    -- 为代码调试提供内联文本
+    use {
+        "theHamsta/nvim-dap-virtual-text",
+        requires = {
+            "mfussenegger/nvim-dap"
+        },
+        config = function()
+            require("dap.nvim-dap-virtual-text")
+        end
+    }
+    -- 为代码调试提供 UI 界面
+    use {
+        "rcarriga/nvim-dap-ui",
+        requires = {
+            "mfussenegger/nvim-dap"
+        },
+        config = function()
+            require("dap.nvim-dap-ui")
+        end
+    }
+    use {
+        'akinsho/toggleterm.nvim'
+    }
+    use {
         'godlygeek/tabular'
+    }
+    use {
+        'azadkuh/vim-cmus'
     }
     use {
         'mattn/emmet-vim'
@@ -40,10 +72,6 @@ require('packer').startup(function()
 	use 'Mofiqul/dracula.nvim'
     use 'L3MON4D3/LuaSnip'
 	use { 'tami5/lspsaga.nvim' }  -- nightly
-	use {
-		'nvim-telescope/telescope.nvim',
-		requires = { {'nvim-lua/plenary.nvim'} }
-	}
 	use { 'crispgm/nvim-go',
 		requires = {
 			'nvim-lua/plenary.nvim',
