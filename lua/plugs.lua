@@ -11,6 +11,9 @@ require('packer').startup(function()
         'windwp/nvim-autopairs'
     }
     use {
+        "Pocco81/AutoSave.nvim",
+    }
+    use {
         "mfussenegger/nvim-dap",
         config = function()
             require("dap.nvim-dap")
