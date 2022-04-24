@@ -7,7 +7,9 @@ vim.fn.sign_define("DapBreakpoint", {text = "⊚", texthl = "TodoFgFIX", linehl 
 -- 加载调试器配置
 local dap_config = {
     python = require("dap.python"),
-    -- go = require("dap.go")
+    go = require("dap.go"),
+    cpp = require("dap.cpp"),
+    c = require("dap.cpp")
 }
 -- 设置调试器
 for dap_name, dap_options in pairs(dap_config) do
@@ -32,7 +34,7 @@ map("n", "<F7>", "<cmd>lua require'dap'.step_over()<CR>", {})
 -- 步出当前函数
 map("n", "<F8>", "<cmd>lua require'dap'.step_out()<CR>", {})
 -- 重启调试
-map("n", "<F2>", "<cmd>lua require'dap'.run_last()<CR>", {})
+map("n", "<F3>", "<cmd>lua require'dap'.run_last()<CR>", {})
 -- 退出调试（关闭调试，关闭 repl，关闭 ui，清除内联文本）
 map(
     "n",
