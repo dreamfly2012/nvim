@@ -9,7 +9,8 @@ local dap_config = {
     python = require("dap.python"),
     go = require("dap.go"),
     cpp = require("dap.cpp"),
-    c = require("dap.cpp")
+    c = require("dap.cpp"),
+    php = require("dap.php"),
 }
 -- 设置调试器
 for dap_name, dap_options in pairs(dap_config) do
