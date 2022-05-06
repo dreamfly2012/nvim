@@ -69,8 +69,7 @@ require('packer').startup(function()
         'junegunn/fzf.vim'
     }
     use {
-        'fatih/vim-go',
-        'buoto/gotests-vim'
+        'fatih/vim-go'
     }
     use {
         'windwp/nvim-ts-autotag'
