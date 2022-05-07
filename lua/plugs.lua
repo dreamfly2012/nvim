@@ -56,9 +56,6 @@ require('packer').startup(function()
         'godlygeek/tabular'
     }
     use {
-        'azadkuh/vim-cmus'
-    }
-    use {
         'mattn/emmet-vim'
     }
     use {
@@ -67,9 +64,6 @@ require('packer').startup(function()
     use {
         'junegunn/fzf',
         'junegunn/fzf.vim'
-    }
-    use {
-        'fatih/vim-go'
     }
     use {
         'windwp/nvim-ts-autotag'
@@ -85,7 +79,8 @@ require('packer').startup(function()
 	use 'Mofiqul/dracula.nvim'
     use 'L3MON4D3/LuaSnip'
 	use { 'tami5/lspsaga.nvim' }  -- nightly
-	use { 'crispgm/nvim-go',
+	use { 
+        'crispgm/nvim-go',
 		requires = {
 			'nvim-lua/plenary.nvim',
 			'nvim-lua/popup.nvim'
@@ -93,6 +88,5 @@ require('packer').startup(function()
 		config = function() require'go'.setup{} end
 	}
 	use { 'nvim-treesitter/nvim-treesitter'}
-	use {'hrsh7th/nvim-cmp'}
 	use { 'nvim-lua/lsp-status.nvim'}
 end)
