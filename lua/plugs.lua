@@ -4,6 +4,15 @@ require('packer').startup(function()
 	use 'neovim/nvim-lspconfig' -- Collection of configurations for the built-in LSP client
 	use { 'echasnovski/mini.nvim', branch = 'stable' }
     use {
+        'othree/html5.vim'
+    }
+    use{
+        'pangloss/vim-javascript'
+    }
+    use{
+        'evanleck/vim-svelte', branch =  'main'
+    }
+    use {
         'nvim-lualine/lualine.nvim',
         requires = { 'kyazdani42/nvim-web-devicons', opt = true }
     }
