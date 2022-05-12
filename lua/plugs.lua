@@ -6,6 +6,9 @@ require('packer').startup(function()
     use {
         'othree/html5.vim'
     }
+    use {
+        'voldikss/vim-translator'
+    }
     use{
         'pangloss/vim-javascript'
     }

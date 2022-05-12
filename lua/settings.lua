@@ -14,3 +14,5 @@ vim.o.cursorline = true
 vim.g.copilot_no_tab_map = true
 vim.g.copilot_assume_mapped = true
 vim.g.copilot_tab_fallback = ""
+vim.g.translator_default_engines = {"bing","haici"}
+vim.g.translator_target_lang = "zh"
