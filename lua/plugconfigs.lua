@@ -18,10 +18,10 @@ lspsaga.setup { -- defaults ...
   -- code action title icon
   code_action_icon = " ",
   code_action_prompt = {
-    --enable = true,
-    --sign = true,
-    --sign_priority = 40,
-    --virtual_text = true,
+    enable = true,
+    sign = true,
+    sign_priority = 40,
+    virtual_text = true,
   },
   finder_definition_icon = "  ",
   finder_reference_icon = "  ",
@@ -145,7 +145,6 @@ nvim_tree.setup {
   open_on_setup        = false,
   ignore_buffer_on_setup = false,
   ignore_ft_on_setup   = {},
-  auto_close           = false,
   auto_reload_on_write = true,
   open_on_tab          = false,
   hijack_cursor        = false,
@@ -228,37 +227,7 @@ nvim_tree.setup {
     },
   },
 }
-local luasnip = require 'luasnip'
-local cmp = require "cmp"
-cmp.setup {
-    mapping = {
-        ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-        ['<C-f>'] = cmp.mapping.scroll_docs(4),
-        ['<C-Space>'] = cmp.mapping.complete(),
-        ['<CR>'] = cmp.mapping.confirm {
-            behavior = cmp.ConfirmBehavior.Replace,
-            select = true,
-        },
-        ['<Tab>'] = function(fallback)
-            if cmp.visible() then
-                cmp.select_next_item()
-            elseif luasnip.expand_or_jumpable() then
-                luasnip.expand_or_jump()
-            else
-                fallback()
-            end
-        end,
-        ['<S-Tab>'] = function(fallback)
-            if cmp.visible() then
-                cmp.select_prev_item()
-            elseif luasnip.jumpable(-1) then
-                luasnip.jump(-1)
-            else
-        fallback()
-      end
-    end,
-  }
-}
+
 local completion = require "mini.completion"
 completion.setup{
   -- Delay (debounce type, in ms) between certain Neovim event and action.
