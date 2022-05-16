@@ -1,6 +1,11 @@
 local use = require('packer').use
+require('packer').init({
+    git = {
+        default_url_format = 'git@github.com:%s'
+    }
+})
 require('packer').startup(function()
-	use 'wbthomason/packer.nvim' -- Package manager
+	use {'wbthomason/packer.nvim'} 
 	use 'neovim/nvim-lspconfig' -- Collection of configurations for the built-in LSP client
 	use { 'echasnovski/mini.nvim', branch = 'stable' }
     use {
