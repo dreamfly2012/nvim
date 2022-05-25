@@ -10,9 +10,12 @@ vim.o.shiftwidth = 4
 vim.o.tabstop = 4
 vim.o.ai = true
 vim.o.si = true
+vim.o.completeopt= "menu,menuone,noselect"
 vim.o.cursorline = true
 vim.g.copilot_no_tab_map = true
 vim.g.copilot_assume_mapped = true
 vim.g.copilot_tab_fallback = ""
 vim.g.translator_default_engines = {"bing","haici"}
 vim.g.translator_target_lang = "zh"
+vim.g.vim_markdown_fenced_languages = {"vim","js=javascript","go=golang","php","ts","lua","java","python","c","cpp"}
+vim.g.vim_markdown_folding_disabled = 1

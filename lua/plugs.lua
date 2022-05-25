@@ -5,9 +5,19 @@ require('packer').init({
     }
 })
 require('packer').startup(function()
-	use {'wbthomason/packer.nvim'} 
+	use {'wbthomason/packer.nvim'}
 	use 'neovim/nvim-lspconfig' -- Collection of configurations for the built-in LSP client
-	use { 'echasnovski/mini.nvim', branch = 'stable' }
+    use {
+        'hrsh7th/cmp-nvim-lsp',
+        'hrsh7th/cmp-buffer',
+        'hrsh7th/cmp-path',
+        'hrsh7th/cmp-cmdline',
+        'hrsh7th/nvim-cmp',
+
+        'honza/vim-snippets',
+        'dcampos/nvim-snippy',
+        'dcampos/cmp-snippy',
+    }
     use {
         'othree/html5.vim'
     }
@@ -30,15 +40,12 @@ require('packer').startup(function()
     use {
         'hotoo/pangu.vim'
     }
+    -- markdown
     use {
-        "folke/zen-mode.nvim",
-        config = function()
-            require("zen-mode").setup {
-                -- your configuration comes here
-                -- or leave it empty to use the default settings
-                -- refer to the configuration section below
-            }
-        end
+        'godlygeek/tabular',
+        'preservim/vim-markdown',
+        'junegunn/goyo.vim',
+        'junegunn/limelight.vim'
     }
     use {
         "mfussenegger/nvim-dap",
@@ -70,9 +77,6 @@ require('packer').startup(function()
         'akinsho/toggleterm.nvim'
     }
     use {
-        'godlygeek/tabular'
-    }
-    use {
         'mattn/emmet-vim'
     }
     use {
@@ -89,14 +93,14 @@ require('packer').startup(function()
 	use {
 		'kyazdani42/nvim-tree.lua',
 		requires = {
-			'kyazdani42/nvim-web-devicons', -- optional, for file icon
+			'kyazdani42/nvim-web-devicons',
 		},
 		config = function() require'nvim-tree'.setup {} end
 	}
 	use 'Mofiqul/dracula.nvim'
     use 'L3MON4D3/LuaSnip'
-	use { 'tami5/lspsaga.nvim' }  -- nightly
-	use { 
+	use { 'tami5/lspsaga.nvim' }
+	use {
         'crispgm/nvim-go',
 		requires = {
 			'nvim-lua/plenary.nvim',

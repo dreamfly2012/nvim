@@ -1,7 +1,7 @@
 return {
     adapters = {
         type = 'executable',
-        command = '/home/dreamfly/cpptools/extension/debugAdapters/bin/OpenDebugAD7',
+        command = '/home/dreamfly/.config/nvim/lua/dap/OpenDebugAD7',
         id = "cpp",
         name = "cpp"
     },
