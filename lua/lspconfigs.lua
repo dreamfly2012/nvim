@@ -64,6 +64,5 @@ require('lspconfig').pyright.setup{
             tabWidth = 2,
         }
     }
-
 }
 
