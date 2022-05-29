@@ -7,16 +7,9 @@ require('packer').init({
 require('packer').startup(function()
 	use {'wbthomason/packer.nvim'}
 	use 'neovim/nvim-lspconfig' -- Collection of configurations for the built-in LSP client
+    use 'williamboman/nvim-lsp-installer'
     use {
-        'hrsh7th/cmp-nvim-lsp',
-        'hrsh7th/cmp-buffer',
-        'hrsh7th/cmp-path',
-        'hrsh7th/cmp-cmdline',
-        'hrsh7th/nvim-cmp',
-
-        'honza/vim-snippets',
-        'dcampos/nvim-snippy',
-        'dcampos/cmp-snippy',
+        "echasnovski/mini.nvim"
     }
     use {
         'othree/html5.vim'
@@ -44,8 +37,32 @@ require('packer').startup(function()
     use {
         'godlygeek/tabular',
         'preservim/vim-markdown',
-        'junegunn/goyo.vim',
-        'junegunn/limelight.vim'
+    }
+    use {
+        'folke/zen-mode.nvim',
+        config = function()
+            require("zen-mode").setup{
+                window = {
+                    width = 90
+                },
+                options = {
+                    -- signcolumn = "no", -- disable signcolumn
+                    number = false, -- disable number column
+                    relativenumber = false, -- disable relative numbers
+                    -- cursorline = false, -- disable cursorline
+                    -- cursorcolumn = false, -- disable cursor column
+                    -- foldcolumn = "0", -- disable fold column
+                    -- list = false, -- disable whitespace characters
+                },
+            }
+        end
+    }
+    use {
+        "folke/twilight.nvim",
+        config = function()
+            require("twilight").setup {
+            }
+        end
     }
     use {
         "mfussenegger/nvim-dap",
@@ -72,9 +89,6 @@ require('packer').startup(function()
         config = function()
             require("dap.nvim-dap-ui")
         end
-    }
-    use {
-        'akinsho/toggleterm.nvim'
     }
     use {
         'mattn/emmet-vim'
