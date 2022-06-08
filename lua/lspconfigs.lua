@@ -29,7 +29,7 @@ end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = {'sumneko_lua', 'jdtls','clangd',  'rust_analyzer', 'cssls','tsserver', 'gopls', 'intelephense' }
+local servers = {'sumneko_lua', 'jdtls',  'rust_analyzer', 'cssls','tsserver', 'gopls', 'intelephense' }
 for _, lsp in pairs(servers) do
   require('lspconfig')[lsp].setup {
     on_attach = on_attach,
@@ -40,6 +40,10 @@ for _, lsp in pairs(servers) do
   }
 end
 
+
+require('lspconfig').clangd.setup{
+
+}
 require('lspconfig').sumneko_lua.setup{
     settings = {
         Lua = {

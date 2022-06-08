@@ -189,6 +189,11 @@ nvim_tree.setup {
   },
 }
 
+require("toggleterm").setup{
+    open_mapping = [[<c-\>]],
+    direction = 'horizontal',
+}
+
 require("mini.completion").setup{}
 
 require("mini.comment").setup{}
