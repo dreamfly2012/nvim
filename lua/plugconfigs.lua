@@ -191,13 +191,6 @@ nvim_tree.setup {
 
 require("toggleterm").setup{
     open_mapping = [[<c-\>]],
-    direction = 'horizontal',
+    direction = 'float',
 }
 
-require("mini.completion").setup{}
-
-require("mini.comment").setup{}
-
-require("mini.surround").setup{}
-
-require("mini.pairs").setup{}

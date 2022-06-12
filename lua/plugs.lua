@@ -9,7 +9,13 @@ require('packer').startup(function()
 	use 'neovim/nvim-lspconfig' -- Collection of configurations for the built-in LSP client
     use 'williamboman/nvim-lsp-installer'
     use {
-        "echasnovski/mini.nvim"
+        'hrsh7th/cmp-nvim-lsp',
+        'hrsh7th/cmp-buffer',
+        'hrsh7th/cmp-path',
+        'hrsh7th/cmp-cmdline',
+        'hrsh7th/nvim-cmp',
+        'hrsh7th/cmp-vsnip',
+        'hrsh7th/vim-vsnip'
     }
     use {
         'othree/html5.vim'
