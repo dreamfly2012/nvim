@@ -18,6 +18,9 @@ require('packer').startup(function()
         'hrsh7th/vim-vsnip'
     }
     use {
+        'ekickx/clipboard-image.nvim'
+    }
+    use {
         'othree/html5.vim'
     }
     use {
