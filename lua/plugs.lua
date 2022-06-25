@@ -18,6 +18,11 @@ require('packer').startup(function()
         'hrsh7th/vim-vsnip'
     }
     use {
+        "iamcco/markdown-preview.nvim",
+        run = function() vim.fn["mkdp#util#install"]() end,
+    }
+
+    use {
         'ekickx/clipboard-image.nvim'
     }
     use {
