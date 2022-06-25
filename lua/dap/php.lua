@@ -1,7 +1,7 @@
 return {
     adapters = {
         type='executable',
-        command = 'nodejs',
+        command = 'node',
         args = {"/home/dreamfly/vscode-php-debug/out/phpDebug.js"},
     },
     configurations = {

@@ -5,6 +5,7 @@ require('lualine').setup {
     theme = 'dracula-nvim'
   }
 }
+
 local lspsaga = require 'lspsaga'
 lspsaga.setup { -- defaults ...
   debug = false,
@@ -62,47 +63,7 @@ vim.api.nvim_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', op
 vim.api.nvim_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
 vim.api.nvim_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
 
--- Use an on_attach function to only map the following keys
--- after the language server attaches to the current buffer
-local on_attach = function(client, bufnr)
-  -- Enable completion triggered by <c-x><c-o>
-  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-  -- Mappings.
-  -- See `:help vim.lsp.*` for documentation on any of the below functions
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-end
-
--- Use a loop to conveniently call 'setup' on multiple servers and
--- map buffer local keybindings when the language server attaches
-local servers = { 'pyright', 'rust_analyzer', 'tsserver', 'intelephense' }
-for _, lsp in pairs(servers) do
-  require('lspconfig')[lsp].setup {
-    on_attach = on_attach,
-    flags = {
-      -- This will be the default in neovim 0.7+
-      debounce_text_changes = 150,
-    }
-  }
-end
-
-local pyright_server = require('lspconfig')['pyright']
-
-pyright_server.setup{
-    pythonVersion = "3.8"
-}
+require("nvim-lsp-installer").setup{}
 
 local status, treesitter = pcall(require, "nvim-treesitter.configs")
 if (not status) then
@@ -229,107 +190,8 @@ nvim_tree.setup {
   },
 }
 
-local completion = require "mini.completion"
-completion.setup{
-  -- Delay (debounce type, in ms) between certain Neovim event and action.
-  -- This can be used to (virtually) disable certain automatic actions by
-  -- setting very high delay time (like 10^7).
-  delay = { completion = 100, info = 100, signature = 50 },
-
-  -- Maximum dimensions of floating windows for certain actions. Action
-  -- entry should be a table with 'height' and 'width' fields.
-  window_dimensions = {
-    info = { height = 25, width = 80 },
-    signature = { height = 25, width = 80 },
-  },
-
-  -- Way of how module does LSP completion
-  lsp_completion = {
-    -- `source_func` should be one of 'completefunc' or 'omnifunc'.
-    source_func = 'completefunc',
-
-    -- `auto_setup` should be boolean indicating if LSP completion is set up
-    -- on every `BufEnter` event.
-    auto_setup = true,
-
-    -- `process_items` should be a function which takes LSP
-    -- 'textDocument/completion' response items and word to complete. Its
-    -- output should be a table of the same nature as input items. The most
-    -- common use-cases are custom filtering and sorting. You can use
-    -- default `process_items` as `MiniCompletion.default_process_items()`.
-    -- process_items = MiniCompletion.default_process_items(),--<function: filters out snippets; sorts by LSP specs>,
-  },
-
-  -- Fallback action. It will always be run in Insert mode. To use Neovim's
-  -- built-in completion (see `:h ins-completion`), supply its mapping as
-  -- string. Example: to use 'whole lines' completion, supply '<C-x><C-l>'.
-  fallback_action = '<C-n>',--<function: like `<C-n>` completion>,
-
-  -- Module mappings. Use `''` (empty string) to disable one. Some of them
-  -- might conflict with system mappings.
-  mappings = {
-    force_twostep = '<C-Space>', -- Force two-step completion
-    force_fallback = '<A-Space>', -- Force fallback completion
-  },
-
-  -- Whether to set Vim's settings for better experience (modifies
-  -- `shortmess` and `completeopt`)
-  set_vim_settings = true,
-}
-local surround = require "mini.surround"
-surround.setup{
-
-}
-local npairs = require "nvim-autopairs"
-npairs.setup({
-    fast_wrap = {
-      map = '<M-e>',
-      chars = { '{', '[', '(', '"', "'" },
-      pattern = string.gsub([[ [%'%"%)%>%]%)%}%,] ]], '%s+', ''),
-      offset = -1, -- Offset from pattern match
-      end_key = '$',
-      keys = 'qwertyuiopzxcvbnmasdfghjkl',
-      check_comma = true,
-      highlight = 'Search',
-      highlight_grey='Comment'
-    },
-})
-
-
-
 require("toggleterm").setup{
-    -- size can be a number or function which is passed the current terminal
-    size = 20,
     open_mapping = [[<c-\>]],
-    hide_numbers = true, -- hide the number column in toggleterm buffers
-    shade_filetypes = {},
-    highlights = {
-        Normal = {
-        },
-        NormalFloat = {
-            link = 'Normal'
-        },
-        FloatBorder = {
-        },
-    },
-    shade_terminals = true,
-    shading_factor = '1',
-    start_in_insert = true,
-    insert_mappings = true, -- whether or not the open mapping applies in insert mode
-    terminal_mappings = true, -- whether or not the open mapping applies in the opened terminals
-    persist_size = true,
     direction = 'float',
-    close_on_exit = true, -- close the terminal window when the process exits
-    shell = vim.o.shell, -- change the default shell
-
-    float_opts = {
-        -- The border key is *almost* the same as 'nvim_open_win'
-        -- see :h nvim_open_win for details on borders however
-        -- the 'curved' border is a custom border type
-        -- not natively supported but implemented in this plugin.
-        border = 'curved',
-        width =  80,
-        height = 20,
-        winblend = 3,
-    }
 }
+
