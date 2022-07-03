@@ -26,9 +26,12 @@ local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 end
-
+local cmp_autopairs = require('nvim-autopairs.completion.cmp')
 local cmp = require'cmp'
-
+cmp.event:on(
+    'confirm_done',
+    cmp_autopairs.on_confirm_done()
+)
 cmp.setup({
     snippet = {
         -- REQUIRED - you must specify a snippet engine

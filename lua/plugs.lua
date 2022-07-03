@@ -7,6 +7,10 @@ require('packer').init({
 require('packer').startup(function()
 	use {'wbthomason/packer.nvim'}
 	use 'neovim/nvim-lspconfig' -- Collection of configurations for the built-in LSP client
+    use {
+        "windwp/nvim-autopairs",
+        config = function() require("nvim-autopairs").setup {} end
+    }
     use 'williamboman/nvim-lsp-installer'
     use {
         'hrsh7th/cmp-nvim-lsp',
@@ -17,6 +21,7 @@ require('packer').startup(function()
         'hrsh7th/cmp-vsnip',
         'hrsh7th/vim-vsnip'
     }
+    use({ "iamcco/markdown-preview.nvim", run = "cd app && npm install", setup = function() vim.g.mkdp_filetypes = { "markdown" } end, ft = { "markdown" }, })
     use {
         'ekickx/clipboard-image.nvim'
     }
@@ -35,9 +40,6 @@ require('packer').startup(function()
     use {
         'nvim-lualine/lualine.nvim',
         requires = { 'kyazdani42/nvim-web-devicons', opt = true }
-    }
-    use {
-        'windwp/nvim-autopairs'
     }
     use {
         'hotoo/pangu.vim'
