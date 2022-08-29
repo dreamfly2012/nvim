@@ -5,6 +5,34 @@ require('lualine').setup {
     theme = 'dracula-nvim'
   }
 }
+require('mcc').setup({
+  c = {'-','->','-'},
+  rust = {';','::',';'},
+  -- also support mulitple rules
+  go = {
+    { ';',':=',';'},
+    { '/',':=',';'},
+  }
+})
+
+local npairs = require 'nvim-autopairs'
+npairs.setup({
+    fast_wrap = {},
+})
+
+-- change default fast_wrap
+npairs.setup({
+    fast_wrap = {
+      map = '<M-e>',
+      chars = { '{', '[', '(', '"', "'" },
+      pattern = [=[[%'%"%)%>%]%)%}%,]]=],
+      end_key = '$',
+      keys = 'qwertyuiopzxcvbnmasdfghjkl',
+      check_comma = true,
+      highlight = 'Search',
+      highlight_grey='Comment'
+    },
+})
 
 local lspsaga = require 'lspsaga'
 lspsaga.setup { -- defaults ...

@@ -11,6 +11,7 @@ require('packer').startup(function()
         "windwp/nvim-autopairs",
         config = function() require("nvim-autopairs").setup {} end
     }
+    use {'glepnir/mcc.nvim'}
     use 'williamboman/nvim-lsp-installer'
     use {
         'hrsh7th/cmp-nvim-lsp',
@@ -22,10 +23,6 @@ require('packer').startup(function()
         'hrsh7th/vim-vsnip'
     }
     use({ "iamcco/markdown-preview.nvim", run = "cd app && npm install", setup = function() vim.g.mkdp_filetypes = { "markdown" } end, ft = { "markdown" }, })
-    use {
-        "iamcco/markdown-preview.nvim",
-        run = function() vim.fn["mkdp#util#install"]() end,
-    }
 
     use {
         'ekickx/clipboard-image.nvim'
