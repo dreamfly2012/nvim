@@ -11,6 +11,7 @@ require('packer').startup(function()
         "windwp/nvim-autopairs",
         config = function() require("nvim-autopairs").setup {} end
     }
+    use {'glepnir/mcc.nvim'}
     use 'williamboman/nvim-lsp-installer'
     use {
         'hrsh7th/cmp-nvim-lsp',
@@ -20,6 +21,11 @@ require('packer').startup(function()
         'hrsh7th/nvim-cmp',
         'hrsh7th/cmp-vsnip',
         'hrsh7th/vim-vsnip'
+    }
+    use {
+        'nvim-telescope/telescope.nvim', tag = '0.1.0',
+        -- or                            , branch = '0.1.x',
+        requires = { {'nvim-lua/plenary.nvim'} }
     }
     use({ "iamcco/markdown-preview.nvim", run = "cd app && npm install", setup = function() vim.g.mkdp_filetypes = { "markdown" } end, ft = { "markdown" }, })
 

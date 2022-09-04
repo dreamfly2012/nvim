@@ -87,7 +87,8 @@ cmp.setup.cmdline(':', {
     sources = cmp.config.sources({
         { name = 'path' }
     }, {
-        { name = 'cmdline' }
+         -- Do not show completion for words starting with '!'
+    {name = 'cmdline', keyword_pattern = [[\!\@<!\w*]]},
     })
 })
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
