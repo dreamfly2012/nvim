@@ -33,7 +33,7 @@ npairs.setup({
       highlight_grey='Comment'
     },
 })
-
+require('telescope').load_extension('media_files')
 require('telescope').setup{
   defaults = {
     -- Default configuration for telescope goes here:
@@ -62,11 +62,12 @@ require('telescope').setup{
     -- builtin picker
   },
   extensions = {
-    -- Your extension configuration goes here:
-    -- extension_name = {
-    --   extension_config_key = value,
-    -- }
-    -- please take a look at the readme of the extension you want to configure
+        media_files = {
+      -- filetypes whitelist
+      -- defaults to {"png", "jpg", "mp4", "webm", "pdf"}
+      filetypes = {"png", "webp", "jpg", "jpeg"},
+      find_cmd = "rg" -- find command (defaults to `fd`)
+    }
   }
 }
 
