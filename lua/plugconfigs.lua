@@ -73,6 +73,19 @@ require('telescope').setup{
 
 local neotest = require 'neotest'
 neotest.setup({
+    icons = {
+      expanded = "",
+      child_prefix = "",
+      child_indent = "",
+      final_child_prefix = "",
+      non_collapsible = "",
+      collapsed = "",
+
+      passed = "",
+      running = "",
+      failed = "",
+      unknown = ""
+    },
     adapters = {
         require('neotest-phpunit')({
             phpunit_cmd = function()
