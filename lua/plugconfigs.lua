@@ -71,6 +71,17 @@ require('telescope').setup{
   }
 }
 
+local neotest = require 'neotest'
+neotest.setup({
+    adapters = {
+        require('neotest-phpunit')({
+            phpunit_cmd = function()
+                return 'vendor/bin/phpunit'
+            end
+        })
+    }
+})
+
 local lspsaga = require 'lspsaga'
 lspsaga.setup { -- defaults ...
   debug = false,

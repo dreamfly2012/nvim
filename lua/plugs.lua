@@ -23,6 +23,15 @@ require('packer').startup(function()
         'hrsh7th/vim-vsnip'
     }
     use {
+        "nvim-neotest/neotest",
+        requires = {
+            "nvim-lua/plenary.nvim",
+            "nvim-treesitter/nvim-treesitter",
+            "antoinemadec/FixCursorHold.nvim",
+            'olimorris/neotest-phpunit',
+        }
+    }
+    use {
         'nvim-telescope/telescope.nvim', tag = '0.1.0',
         -- or                            , branch = '0.1.x',
         requires = { {
