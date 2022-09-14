@@ -1,6 +1,7 @@
 vim.o.number = true
 vim.o.textwidth = 80
 vim.o.mouse = 'a'
+vim.o.scrolloff = 10
 vim.o.encoding = "utf-8"
 vim.o.fileencoding = "utf-8"
 vim.o.relativenumber = false
