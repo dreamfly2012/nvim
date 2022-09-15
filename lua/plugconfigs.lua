@@ -33,7 +33,6 @@ npairs.setup({
       highlight_grey='Comment'
     },
 })
-require('telescope').load_extension('media_files')
 require('telescope').setup{
   defaults = {
     -- Default configuration for telescope goes here:

@@ -36,7 +36,7 @@ require('packer').startup(function()
         -- or                            , branch = '0.1.x',
         requires = { {
             'nvim-lua/plenary.nvim',
-            "nvim-telescope/telescope-media-files.nvim",
+            'nvim-lua/popup.nvim',
         } }
     }
     use({ "iamcco/markdown-preview.nvim", run = "cd app && npm install", setup = function() vim.g.mkdp_filetypes = { "markdown" } end, ft = { "markdown" }, })
