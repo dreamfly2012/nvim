@@ -13,6 +13,7 @@ require('packer').startup(function()
     }
     use {'glepnir/mcc.nvim'}
     use 'williamboman/nvim-lsp-installer'
+    use 'lervag/vimtex'
     use {
         'hrsh7th/cmp-nvim-lsp',
         'hrsh7th/cmp-buffer',
@@ -94,9 +95,6 @@ require('packer').startup(function()
             }
         end
     }
-    use {"akinsho/toggleterm.nvim", tag = 'v1.*', config = function()
-        require("toggleterm").setup()
-    end}
     use {
         "mfussenegger/nvim-dap",
         config = function()
