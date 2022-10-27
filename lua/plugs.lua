@@ -145,7 +145,6 @@ require('packer').startup(function()
 		},
 		config = function() require'nvim-tree'.setup {} end
 	}
-	use 'Mofiqul/dracula.nvim'
     use 'L3MON4D3/LuaSnip'
 	use { 'tami5/lspsaga.nvim' }
 	use {
