@@ -26,9 +26,12 @@ local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 end
-
+local cmp_autopairs = require('nvim-autopairs.completion.cmp')
 local cmp = require'cmp'
-
+cmp.event:on(
+    'confirm_done',
+    cmp_autopairs.on_confirm_done()
+)
 cmp.setup({
     snippet = {
         -- REQUIRED - you must specify a snippet engine
@@ -84,16 +87,15 @@ cmp.setup.cmdline(':', {
     sources = cmp.config.sources({
         { name = 'path' }
     }, {
-        { name = 'cmdline' }
+         -- Do not show completion for words starting with '!'
+    {name = 'cmdline', keyword_pattern = [[\!\@<!\w*]]},
     })
 })
-local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
 local servers = {'sumneko_lua', 'jdtls',  'rust_analyzer', 'cssls','tsserver', 'gopls', 'intelephense' }
 for _, lsp in pairs(servers) do
   require('lspconfig')[lsp].setup {
-      capabilities = capabilities,
     on_attach = on_attach,
     flags = {
       -- This will be the default in neovim 0.7+
@@ -110,7 +112,7 @@ require('lspconfig').sumneko_lua.setup{
     settings = {
         Lua = {
             diagnostics = {
-                globals = { 'vim'}
+                globals = { 'vim','require'}
             }
         }
     }

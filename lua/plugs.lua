@@ -7,7 +7,13 @@ require('packer').init({
 require('packer').startup(function()
 	use {'wbthomason/packer.nvim'}
 	use 'neovim/nvim-lspconfig' -- Collection of configurations for the built-in LSP client
+    use {
+        "windwp/nvim-autopairs",
+        config = function() require("nvim-autopairs").setup {} end
+    }
+    use {'glepnir/mcc.nvim'}
     use 'williamboman/nvim-lsp-installer'
+    use 'lervag/vimtex'
     use {
         'hrsh7th/cmp-nvim-lsp',
         'hrsh7th/cmp-buffer',
@@ -18,9 +24,30 @@ require('packer').startup(function()
         'hrsh7th/vim-vsnip'
     }
     use {
-        "iamcco/markdown-preview.nvim",
-        run = function() vim.fn["mkdp#util#install"]() end,
+        'jwalton512/vim-blade'
     }
+    use {
+        "nvim-neotest/neotest",
+        requires = {
+            "nvim-lua/plenary.nvim",
+            "nvim-treesitter/nvim-treesitter",
+            "antoinemadec/FixCursorHold.nvim",
+            'olimorris/neotest-phpunit',
+        }
+    }
+    --theme
+    use {
+        'dracula/vim',
+    }
+    use {
+        'nvim-telescope/telescope.nvim', tag = '0.1.0',
+        -- or                            , branch = '0.1.x',
+        requires = { {
+            'nvim-lua/plenary.nvim',
+            'nvim-lua/popup.nvim',
+        } }
+    }
+    use({ "iamcco/markdown-preview.nvim", run = "cd app && npm install", setup = function() vim.g.mkdp_filetypes = { "markdown" } end, ft = { "markdown" }, })
 
     use {
         'ekickx/clipboard-image.nvim'
@@ -42,9 +69,6 @@ require('packer').startup(function()
         requires = { 'kyazdani42/nvim-web-devicons', opt = true }
     }
     use {
-        'windwp/nvim-autopairs'
-    }
-    use {
         'hotoo/pangu.vim'
     }
     -- markdown
@@ -57,17 +81,17 @@ require('packer').startup(function()
         config = function()
             require("zen-mode").setup{
                 window = {
-                    width = 90
-                },
-                options = {
-                    -- signcolumn = "no", -- disable signcolumn
-                    number = false, -- disable number column
-                    relativenumber = false, -- disable relative numbers
-                    -- cursorline = false, -- disable cursorline
-                    -- cursorcolumn = false, -- disable cursor column
-                    -- foldcolumn = "0", -- disable fold column
-                    -- list = false, -- disable whitespace characters
-                },
+                    width = 90,
+                    options = {
+                        -- signcolumn = "no", -- disable signcolumn
+                        number = false, -- disable number column
+                        relativenumber = false, -- disable relative numbers
+                        cursorline = false, -- disable cursorline
+                        cursorcolumn = false, -- disable cursor column
+                        -- foldcolumn = "0", -- disable fold column
+                        -- list = false, -- disable whitespace characters
+                    }
+                }
             }
         end
     }
@@ -78,9 +102,6 @@ require('packer').startup(function()
             }
         end
     }
-    use {"akinsho/toggleterm.nvim", tag = 'v1.*', config = function()
-        require("toggleterm").setup()
-    end}
     use {
         "mfussenegger/nvim-dap",
         config = function()
@@ -128,7 +149,6 @@ require('packer').startup(function()
 		},
 		config = function() require'nvim-tree'.setup {} end
 	}
-	use 'Mofiqul/dracula.nvim'
     use 'L3MON4D3/LuaSnip'
 	use { 'tami5/lspsaga.nvim' }
 	use {

@@ -1,10 +1,90 @@
-vim.cmd[[colorscheme dracula]]
+local mcc = require 'mcc' 
 
-require('lualine').setup {
-  options = {
-    theme = 'dracula-nvim'
+mcc.setup({
+  c = {'-','->','-'},
+  rust = {';','::',';'},
+  -- also support mulitple rules
+  go = {
+    { ';',':=',';'},
+    { '/',':=',';'},
+  }
+})
+
+local npairs = require 'nvim-autopairs'
+
+-- change default fast_wrap
+npairs.setup({
+    fast_wrap = {
+      map = '<M-e>',
+      chars = { '{', '[', '(', '"', "'" },
+      pattern = [=[[%'%"%)%>%]%)%}%,]]=],
+      end_key = '$',
+      keys = 'qwertyuiopzxcvbnmasdfghjkl',
+      check_comma = true,
+      highlight = 'Search',
+      highlight_grey='Comment'
+    },
+})
+require('telescope').setup{
+  defaults = {
+    -- Default configuration for telescope goes here:
+    -- config_key = value,
+    layout_config = {
+        horizontal = {
+            preview_cutoff = 0,
+        },
+    },
+    mappings = {
+      i = {
+        -- map actions.which_key to <C-h> (default: <C-/>)
+        -- actions.which_key shows the mappings for your picker,
+        -- e.g. git_{create, delete, ...}_branch for the git_branches picker
+        ["<C-h>"] = "which_key"
+      }
+    }
+  },
+  pickers = {
+    -- Default configuration for builtin pickers goes here:
+    -- picker_name = {
+    --   picker_config_key = value,
+    --   ...
+    -- }
+    -- Now the picker_config_key will be applied every time you call this
+    -- builtin picker
+  },
+  extensions = {
+        media_files = {
+      -- filetypes whitelist
+      -- defaults to {"png", "jpg", "mp4", "webm", "pdf"}
+      filetypes = {"png", "webp", "jpg", "jpeg"},
+      find_cmd = "rg" -- find command (defaults to `fd`)
+    }
   }
 }
+
+local neotest = require 'neotest'
+neotest.setup({
+    icons = {
+      expanded = "",
+      child_prefix = "",
+      child_indent = "",
+      final_child_prefix = "",
+      non_collapsible = "",
+      collapsed = "",
+
+      passed = "",
+      running = "",
+      failed = "",
+      unknown = ""
+    },
+    adapters = {
+        require('neotest-phpunit')({
+            phpunit_cmd = function()
+                return 'vendor/bin/phpunit'
+            end
+        })
+    }
+})
 
 local lspsaga = require 'lspsaga'
 lspsaga.setup { -- defaults ...
@@ -148,7 +228,6 @@ nvim_tree.setup {
   },
   view = {
     width = 25,
-    height = 30,
     hide_root_folder = false,
     side = 'left',
     preserve_window_proportions = true,
