@@ -35,6 +35,10 @@ require('packer').startup(function()
             'olimorris/neotest-phpunit',
         }
     }
+    --theme
+    use {
+        'dracula/vim',
+    }
     use {
         'nvim-telescope/telescope.nvim', tag = '0.1.0',
         -- or                            , branch = '0.1.x',
