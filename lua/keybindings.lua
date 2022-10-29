@@ -10,7 +10,6 @@ map("i", "jk", "<ESC>", { silent = true })
 -- Tab> to navigate the completion menu
 map('i', '<S-Tab>', 'pumvisible() ? "\\<C-p>" : "\\<Tab>"', {expr = true})
 map('i', '<Tab>', 'pumvisible() ? "\\<C-n>" : "\\<Tab>"', {expr = true})
-vim.api.nvim_set_keymap("i", "<C-J>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
 map('n', '<F2>', ":NvimTreeToggle<cr>",{})
 map('n', ';f', ":FZF<cr>",{})
 map('n', 'w=',":resize +3<cr>",{})

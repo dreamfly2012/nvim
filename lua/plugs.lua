@@ -39,6 +39,10 @@ require('packer').startup(function()
     use {
         'dracula/vim',
     }
+    --terminal
+    use {
+        'akinsho/toggleterm.nvim',
+    }
     use {
         'nvim-telescope/telescope.nvim', tag = '0.1.0',
         -- or                            , branch = '0.1.x',
