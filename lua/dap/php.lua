@@ -19,7 +19,6 @@ return {
             type="php",
             request="launch",
             port=9000,
-
         }
     }
 }

@@ -180,6 +180,11 @@ treesitter.setup {
   }
 }
 
+require("toggleterm").setup {
+    open_mapping = [[<c-\>]],
+    direction = "float",
+}
+
 local status, nvim_tree = pcall(require, "nvim-tree")
 if (not status) then
   return
