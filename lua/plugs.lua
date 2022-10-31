@@ -26,6 +26,9 @@ require('packer').startup(function()
     use {
         'jwalton512/vim-blade'
     }
+    use {"akinsho/toggleterm.nvim", tag = '*', config = function()
+        require("toggleterm").setup()
+    end}
     use {
         "nvim-neotest/neotest",
         requires = {
