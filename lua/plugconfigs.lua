@@ -1,4 +1,6 @@
-require('mcc').setup({
+local mcc = require 'mcc' 
+
+mcc.setup({
   c = {'-','->','-'},
   rust = {';','::',';'},
   -- also support mulitple rules
@@ -164,10 +166,14 @@ vim.api.nvim_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<C
 
 require("nvim-lsp-installer").setup{}
 
+for _, config in pairs(require("nvim-treesitter.parsers").get_parser_configs()) do
+  config.install_info.url = config.install_info.url:gsub("https://github.com/", "git@github.com:")
+end
 local status, treesitter = pcall(require, "nvim-treesitter.configs")
 if (not status) then
   return
 end
+
 treesitter.setup {
   highlight = {
     enable = true,
@@ -292,4 +298,7 @@ nvim_tree.setup {
   },
 }
 
-
+-- require("toggleterm").setup{
+--     open_mapping = [[<c-\>]],
+--     direction = 'float',
+-- }
