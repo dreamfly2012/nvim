@@ -26,6 +26,9 @@ require('packer').startup(function()
     use {
         'jwalton512/vim-blade'
     }
+    use {
+        'nvim-tree/nvim-web-devicons'
+    }
     use {"akinsho/toggleterm.nvim", tag = '*', config = function()
         require("toggleterm").setup()
     end}
