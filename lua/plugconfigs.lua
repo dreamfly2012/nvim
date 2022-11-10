@@ -1,18 +1,5 @@
-local mcc = require 'mcc' 
-
-mcc.setup({
-  c = {'-','->','-'},
-  rust = {';','::',';'},
-  -- also support mulitple rules
-  go = {
-    { ';',':=',';'},
-    { '/',':=',';'},
-  }
-})
-
 local npairs = require 'nvim-autopairs'
 
--- change default fast_wrap
 npairs.setup({
     fast_wrap = {
       map = '<M-e>',

@@ -16,15 +16,13 @@ require('packer').init({
         default_url_format = 'git@github.com:%s'
     }
 })
-local use = require('packer').use
-require('packer').startup(function()
+require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
 	use 'neovim/nvim-lspconfig' -- Collection of configurations for the built-in LSP client
     use {
         "windwp/nvim-autopairs",
         config = function() require("nvim-autopairs").setup {} end
     }
-    use {'glepnir/mcc.nvim'}
     use 'williamboman/nvim-lsp-installer'
     use 'lervag/vimtex'
     use {
@@ -42,6 +40,7 @@ require('packer').startup(function()
     use {
         'nvim-tree/nvim-web-devicons'
     }
+    -- terminal
     use {"akinsho/toggleterm.nvim", tag = '*', config = function()
         require("toggleterm").setup()
     end}
@@ -58,10 +57,6 @@ require('packer').startup(function()
     use {
         'dracula/vim',
     }
-    --terminal
-    use {
-        'akinsho/toggleterm.nvim',
-    }
     use {
         'nvim-telescope/telescope.nvim', tag = '0.1.0',
         -- or                            , branch = '0.1.x',
@@ -70,8 +65,8 @@ require('packer').startup(function()
             'nvim-lua/popup.nvim',
         } }
     }
-    use({ "iamcco/markdown-preview.nvim", run = "cd app && npm install", setup = function() vim.g.mkdp_filetypes = { "markdown" } end, ft = { "markdown" }, })
-
+    -- code runner
+    use { 'michaelb/sniprun', run = 'bash install.sh' }
     use {
         'ekickx/clipboard-image.nvim'
     }
@@ -99,6 +94,7 @@ require('packer').startup(function()
         'godlygeek/tabular',
         'preservim/vim-markdown',
     }
+    use({ "iamcco/markdown-preview.nvim", run = "cd app && npm install", setup = function() vim.g.mkdp_filetypes = { "markdown" } end, ft = { "markdown" }, })
     use {
         'folke/zen-mode.nvim',
         config = function()
@@ -181,4 +177,7 @@ require('packer').startup(function()
 	}
 	use { 'nvim-treesitter/nvim-treesitter'}
 	use { 'nvim-lua/lsp-status.nvim'}
+    if packer_bootstrap then
+        require('packer').sync()
+    end
 end)
