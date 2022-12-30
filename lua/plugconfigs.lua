@@ -13,6 +13,8 @@ npairs.setup({
     },
 })
 
+require'lualine'.setup()
+
 require'nvim-web-devicons'.setup {
  -- your personnal icons can go here (to override)
  -- you can specify color or cterm_color instead of specifying both of them
@@ -151,8 +153,7 @@ vim.api.nvim_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', op
 vim.api.nvim_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
 vim.api.nvim_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
 
-require("nvim-lsp-installer").setup{}
-
+require("nvim-treesitter.install").prefer_git = true
 for _, config in pairs(require("nvim-treesitter.parsers").get_parser_configs()) do
   config.install_info.url = config.install_info.url:gsub("https://github.com/", "git@github.com:")
 end

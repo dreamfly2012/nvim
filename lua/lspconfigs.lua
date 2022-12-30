@@ -91,46 +91,10 @@ cmp.setup.cmdline(':', {
     {name = 'cmdline', keyword_pattern = [[\!\@<!\w*]]},
     })
 })
--- Use a loop to conveniently call 'setup' on multiple servers and
--- map buffer local keybindings when the language server attaches
-local servers = {'sumneko_lua', 'jdtls',  'rust_analyzer', 'cssls','tsserver', 'gopls', 'intelephense' }
-for _, lsp in pairs(servers) do
-  require('lspconfig')[lsp].setup {
-    on_attach = on_attach,
-    flags = {
-      -- This will be the default in neovim 0.7+
-      debounce_text_changes = 150,
-    }
-  }
-end
 
+require("mason").setup()
+require("mason-lspconfig").setup()
 
-require('lspconfig').clangd.setup{
-
-}
-require('lspconfig').sumneko_lua.setup{
-    settings = {
-        Lua = {
-            diagnostics = {
-                globals = { 'vim','require'}
-            }
-        }
-    }
-}
-
-require('lspconfig').pyright.setup{
-    on_attach = on_attach,
-    settings = {
-        python = {
-            analysis = {
-                autoSearchPaths = true,
-                diagnosticMode = 'workspace',
-                useLibraryCodeForTypes = true,
-            },
-            useTabs = true,
-            pythonVersion = '3.8',
-            tabWidth = 2,
-        }
-    }
-}
-
+require'lspconfig'.emmet_ls.setup{}
+require'lspconfig'.intelephense.setup{}
+require'lspconfig'.svelte.setup{}

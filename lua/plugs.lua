@@ -18,12 +18,15 @@ require('packer').init({
 })
 require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
-	use 'neovim/nvim-lspconfig' -- Collection of configurations for the built-in LSP client
     use {
         "windwp/nvim-autopairs",
         config = function() require("nvim-autopairs").setup {} end
     }
-    use 'williamboman/nvim-lsp-installer'
+    use {
+        "williamboman/mason.nvim",
+        "williamboman/mason-lspconfig.nvim",
+        "neovim/nvim-lspconfig",
+    }
     use 'lervag/vimtex'
     use {
         'hrsh7th/cmp-nvim-lsp',
