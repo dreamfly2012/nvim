@@ -1,4 +1,5 @@
 vim.cmd "colorscheme dracula"
+vim.o.clipboard = "unnamedplus"
 vim.o.number = true
 vim.o.textwidth = 80
 vim.o.mouse = 'a'
@@ -11,6 +12,7 @@ vim.o.ignorecase = true
 vim.o.shiftwidth = 4
 vim.o.tabstop = 4
 vim.o.termguicolors = true
+vim.o.spelllang = "en,cjk"
 vim.o.ai = true
 vim.o.si = true
 vim.o.title = true

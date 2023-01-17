@@ -98,3 +98,6 @@ require("mason-lspconfig").setup()
 require'lspconfig'.emmet_ls.setup{}
 require'lspconfig'.intelephense.setup{}
 require'lspconfig'.svelte.setup{}
+require'lspconfig'.pyright.setup{}
+require'lspconfig'.clangd.setup{}
+require'lspconfig'.dockerls.setup{}
