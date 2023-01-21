@@ -70,6 +70,9 @@ require('packer').startup(function(use)
     }
     -- code runner
     use { 'michaelb/sniprun', run = 'bash install.sh' }
+    -- screenshot
+    use {'asamonik/nvim-screenshot', run = 'go build' }
+    use {'segeljakt/vim-silicon'}
     use {
         'ekickx/clipboard-image.nvim'
     }
@@ -168,7 +171,6 @@ require('packer').startup(function(use)
 		},
 		config = function() require'nvim-tree'.setup {} end
 	}
-    use 'L3MON4D3/LuaSnip'
 	use { 'tami5/lspsaga.nvim' }
 	use {
         'crispgm/nvim-go',
