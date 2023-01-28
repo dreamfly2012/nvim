@@ -26,5 +26,3 @@ vim.g.vim_markdown_fenced_languages = {"vim","js=javascript","go=golang","php","
 vim.g.vim_markdown_folding_disabled = 1
 vim.g.mkdp_open_to_the_world = 1
 vim.g.mkdp_echo_preview_url = 1
-vim.g.mkdp_oepn_ip = '82.156.246.203'
-vim.g.mkdp_port = 8899
