@@ -2,14 +2,14 @@ return {
     adapters = {
         type='executable',
         command = 'node',
-        args = {"/home/dreamfly/vscode-php-debug/out/phpDebug.js"},
+        args = {os.getenv("HOME") .. "/.config/nvim/lua/dap/vscode-php-debug/out/phpDebug.js"},
     },
     configurations = {
         {
             name = "run current script",
             type = "php",
             request = "launch",
-            port = 9000,
+            port = 9003,
             cwd="${fileDirname}",
             program = "${file}",
             runtimeExecutable ="php"
@@ -18,7 +18,7 @@ return {
             name="listen address",
             type="php",
             request="launch",
-            port=9000,
+            port=9003,
         }
     }
 }

@@ -18,12 +18,15 @@ require('packer').init({
 })
 require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
-	use 'neovim/nvim-lspconfig' -- Collection of configurations for the built-in LSP client
     use {
         "windwp/nvim-autopairs",
         config = function() require("nvim-autopairs").setup {} end
     }
-    use 'williamboman/nvim-lsp-installer'
+    use {
+        "williamboman/mason.nvim",
+        "williamboman/mason-lspconfig.nvim",
+        "neovim/nvim-lspconfig",
+    }
     use 'lervag/vimtex'
     use {
         'hrsh7th/cmp-nvim-lsp',
@@ -31,8 +34,8 @@ require('packer').startup(function(use)
         'hrsh7th/cmp-path',
         'hrsh7th/cmp-cmdline',
         'hrsh7th/nvim-cmp',
-        'hrsh7th/cmp-vsnip',
-        'hrsh7th/vim-vsnip'
+        'L3MON4D3/LuaSnip',
+        'saadparwaiz1/cmp_luasnip'
     }
     use {
         'jwalton512/vim-blade'
@@ -67,6 +70,9 @@ require('packer').startup(function(use)
     }
     -- code runner
     use { 'michaelb/sniprun', run = 'bash install.sh' }
+    -- screenshot
+    use {'asamonik/nvim-screenshot', run = 'go build' }
+    use {'segeljakt/vim-silicon'}
     use {
         'ekickx/clipboard-image.nvim'
     }
@@ -165,7 +171,6 @@ require('packer').startup(function(use)
 		},
 		config = function() require'nvim-tree'.setup {} end
 	}
-    use 'L3MON4D3/LuaSnip'
 	use { 'tami5/lspsaga.nvim' }
 	use {
         'crispgm/nvim-go',
