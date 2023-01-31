@@ -47,6 +47,8 @@ require('packer').startup(function(use)
     use {"akinsho/toggleterm.nvim", tag = '*', config = function()
         require("toggleterm").setup()
     end}
+    -- copy 
+    use {"ojroques/vim-oscyank"}
     use {
         "nvim-neotest/neotest",
         requires = {
