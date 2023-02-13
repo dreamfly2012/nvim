@@ -43,6 +43,9 @@ require('packer').startup(function(use)
     use {
         'nvim-tree/nvim-web-devicons'
     }
+    -- prettier
+    use {'jose-elias-alvarez/null-ls.nvim'}
+    use{'MunifTanjim/prettier.nvim'}
     -- terminal
     use {"akinsho/toggleterm.nvim", tag = '*', config = function()
         require("toggleterm").setup()
