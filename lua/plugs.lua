@@ -43,9 +43,9 @@ require('packer').startup(function(use)
     use {
         'nvim-tree/nvim-web-devicons'
     }
-    -- prettier
-    use { 'mhartington/formatter.nvim' }
-    use { 'MunifTanjim/prettier.nvim' }
+    -- formatter
+    --use { 'mhartington/formatter.nvim' }
+    -- use { 'MunifTanjim/prettier.nvim' }
     -- terminal
     use { "akinsho/toggleterm.nvim", tag = '*', config = function()
         require("toggleterm").setup()
