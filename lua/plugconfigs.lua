@@ -285,39 +285,54 @@ nvim_tree.setup {
     },
   },
 }
-local null_ls = require("null-ls")
 
-local group = vim.api.nvim_create_augroup("lsp_format_on_save", { clear = false })
-local event = "BufWritePre" -- or "BufWritePost"
-local async = event == "BufWritePost"
+-- Utilities for creating configurations
+local util = require "formatter.util"
 
-null_ls.setup({
-  on_attach = function(client, bufnr)
-    if client.supports_method("textDocument/formatting") then
-      vim.keymap.set("n", "<Leader>f", function()
-        vim.lsp.buf.format({ bufnr = vim.api.nvim_get_current_buf() })
-      end, { buffer = bufnr, desc = "[lsp] format" })
+-- Provides the Format, FormatWrite, FormatLock, and FormatWriteLock commands
+require("formatter").setup {
+  -- Enable or disable logging
+  logging = true,
+  -- Set the log level
+  log_level = vim.log.levels.WARN,
+  -- All formatter configurations are opt-in
+  filetype = {
+    -- Formatter configurations for filetype "lua" go here
+    -- and will be executed in order
+    lua = {
+      -- "formatter.filetypes.lua" defines default configurations for the
+      -- "lua" filetype
+      require("formatter.filetypes.lua").stylua,
 
-      -- format on save
-      vim.api.nvim_clear_autocmds({ buffer = bufnr, group = group })
-      vim.api.nvim_create_autocmd(event, {
-        buffer = bufnr,
-        group = group,
-        callback = function()
-          vim.lsp.buf.format({ bufnr = bufnr, async = async })
-        end,
-        desc = "[lsp] format on save",
-      })
-    end
+      -- You can also define your own configuration
+      function()
+        -- Supports conditional formatting
+        if util.get_current_buffer_file_name() == "special.lua" then
+          return nil
+        end
 
-    if client.supports_method("textDocument/rangeFormatting") then
-      vim.keymap.set("x", "<Leader>f", function()
-        vim.lsp.buf.format({ bufnr = vim.api.nvim_get_current_buf() })
-      end, { buffer = bufnr, desc = "[lsp] format" })
-    end
-  end,
-})
--- require("toggleterm").setup{
---     open_mapping = [[<c-\>]],
---     direction = 'float',
--- }
+        -- Full specification of configurations is down below and in Vim help
+        -- files
+        return {
+          exe = "stylua",
+          args = {
+            "--search-parent-directories",
+            "--stdin-filepath",
+            util.escape_path(util.get_current_buffer_file_path()),
+            "--",
+            "-",
+          },
+          stdin = true,
+        }
+      end
+    },
+
+    -- Use the special "*" filetype for defining formatter configurations on
+    -- any filetype
+    ["*"] = {
+      -- "formatter.filetypes.any" defines default configurations for any
+      -- filetype
+      require("formatter.filetypes.any").remove_trailing_whitespace
+    }
+  }
+}

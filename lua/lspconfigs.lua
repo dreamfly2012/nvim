@@ -97,7 +97,7 @@ cmp.setup {
 }
 -- Set configuration for specific filetype.
 cmp.setup.filetype('gitcommit', {
-    sources = cmp.config.sources({
+            sources = cmp.config.sources({
         { name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it.
     }, {
         { name = 'buffer' },
@@ -130,7 +130,7 @@ local capabilities = require("cmp_nvim_lsp").default_capabilities()
 local lspconfig = require('lspconfig')
 
 -- Enable some language servers with the additional completion capabilities offered by nvim-cmp
-local servers = { 'clangd', 'rust_analyzer', 'gopls', 'pyright', 'tsserver', 'svelte', 'emmet_ls','phpactor', 'intelephense', 'dockerls' }
+local servers = { 'clangd','html','cssls','tailwindcss', 'rust_analyzer','lua_ls', 'gopls', 'pyright', 'tsserver', 'svelte', 'emmet_ls','phpactor', 'intelephense', 'dockerls' }
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {
     on_attach = on_attach,
