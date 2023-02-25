@@ -1,12 +1,12 @@
 local ensure_packer = function()
-  local fn = vim.fn
-  local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
-  if fn.empty(fn.glob(install_path)) > 0 then
-    fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
-    vim.cmd [[packadd packer.nvim]]
-    return true
-  end
-  return false
+    local fn = vim.fn
+    local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
+    if fn.empty(fn.glob(install_path)) > 0 then
+        fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
+        vim.cmd [[packadd packer.nvim]]
+        return true
+    end
+    return false
 end
 
 local packer_bootstrap = ensure_packer()
@@ -17,7 +17,7 @@ require('packer').init({
     }
 })
 require('packer').startup(function(use)
-  use 'wbthomason/packer.nvim'
+    use 'wbthomason/packer.nvim'
     use {
         "windwp/nvim-autopairs",
         config = function() require("nvim-autopairs").setup {} end
@@ -43,10 +43,15 @@ require('packer').startup(function(use)
     use {
         'nvim-tree/nvim-web-devicons'
     }
+    -- formatter
+    --use { 'mhartington/formatter.nvim' }
+    -- use { 'MunifTanjim/prettier.nvim' }
     -- terminal
-    use {"akinsho/toggleterm.nvim", tag = '*', config = function()
+    use { "akinsho/toggleterm.nvim", tag = '*', config = function()
         require("toggleterm").setup()
-    end}
+    end }
+    -- copy
+    use { "ojroques/vim-oscyank" }
     use {
         "nvim-neotest/neotest",
         requires = {
@@ -71,8 +76,8 @@ require('packer').startup(function(use)
     -- code runner
     use { 'michaelb/sniprun', run = 'bash install.sh' }
     -- screenshot
-    use {'asamonik/nvim-screenshot', run = 'go build' }
-    use {'segeljakt/vim-silicon'}
+    use { 'asamonik/nvim-screenshot', run = 'go build' }
+    use { 'segeljakt/vim-silicon' }
     use {
         'ekickx/clipboard-image.nvim'
     }
@@ -82,11 +87,11 @@ require('packer').startup(function(use)
     use {
         'voldikss/vim-translator'
     }
-    use{
+    use {
         'pangloss/vim-javascript'
     }
-    use{
-        'evanleck/vim-svelte', branch =  'main'
+    use {
+        'evanleck/vim-svelte', branch = 'main'
     }
     use {
         'nvim-lualine/lualine.nvim',
@@ -100,11 +105,12 @@ require('packer').startup(function(use)
         'godlygeek/tabular',
         'preservim/vim-markdown',
     }
-    use({ "iamcco/markdown-preview.nvim", run = "cd app && npm install", setup = function() vim.g.mkdp_filetypes = { "markdown" } end, ft = { "markdown" }, })
+    use({ "iamcco/markdown-preview.nvim", run = "cd app && npm install",
+        setup = function() vim.g.mkdp_filetypes = { "markdown" } end, ft = { "markdown" }, })
     use {
         'folke/zen-mode.nvim',
         config = function()
-            require("zen-mode").setup{
+            require("zen-mode").setup {
                 window = {
                     width = 90,
                     options = {
@@ -163,25 +169,25 @@ require('packer').startup(function(use)
     use {
         'windwp/nvim-ts-autotag'
     }
-    use {"ellisonleao/glow.nvim"}
-	use {
-		'kyazdani42/nvim-tree.lua',
-		requires = {
-			'kyazdani42/nvim-web-devicons',
-		},
-		config = function() require'nvim-tree'.setup {} end
-	}
-	use { 'tami5/lspsaga.nvim' }
-	use {
+    use { "ellisonleao/glow.nvim" }
+    use {
+        'kyazdani42/nvim-tree.lua',
+        requires = {
+            'kyazdani42/nvim-web-devicons',
+        },
+        config = function() require 'nvim-tree'.setup {} end
+    }
+    use { 'tami5/lspsaga.nvim' }
+    use {
         'crispgm/nvim-go',
-		requires = {
-			'nvim-lua/plenary.nvim',
-			'nvim-lua/popup.nvim'
-		},
-		config = function() require'go'.setup{} end
-	}
-	use { 'nvim-treesitter/nvim-treesitter'}
-	use { 'nvim-lua/lsp-status.nvim'}
+        requires = {
+            'nvim-lua/plenary.nvim',
+            'nvim-lua/popup.nvim'
+        },
+        config = function() require 'go'.setup {} end
+    }
+    use { 'nvim-treesitter/nvim-treesitter' }
+    use { 'nvim-lua/lsp-status.nvim' }
     if packer_bootstrap then
         require('packer').sync()
     end
