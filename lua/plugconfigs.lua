@@ -173,6 +173,7 @@ treesitter.setup {
   },
   ensure_installed = {
     "tsx",
+    "astro",
     "python",
     "c",
     "cpp",

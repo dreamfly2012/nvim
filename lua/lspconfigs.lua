@@ -27,7 +27,7 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
   vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
   vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-  vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)  
+  vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
 end
 local cmp_autopairs = require('nvim-autopairs.completion.cmp')
 local has_words_before = function()
@@ -37,7 +37,7 @@ local has_words_before = function()
 end
 
 
-local feedkey = function()
+local feedkey = function(key, mode)
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true,true), mode, true)
 end
 
@@ -130,13 +130,38 @@ local capabilities = require("cmp_nvim_lsp").default_capabilities()
 local lspconfig = require('lspconfig')
 
 -- Enable some language servers with the additional completion capabilities offered by nvim-cmp
-local servers = { 'clangd','html','cssls','tailwindcss', 'rust_analyzer','lua_ls', 'gopls', 'pyright', 'tsserver', 'svelte', 'emmet_ls','phpactor', 'intelephense', 'dockerls' }
+local servers = {'astro','clangd','html','cssls','tailwindcss', 'rust_analyzer','lua_ls', 'gopls', 'pyright','pylsp', 'tsserver', 'svelte', 'emmet_ls','phpactor', 'intelephense', 'dockerls' }
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {
     on_attach = on_attach,
     capabilities = capabilities,
   }
 end
+
+lspconfig.lua_ls.setup({
+    settings = {
+        Lua = {
+            diagnostics = {
+                globals = { 'vim' }
+            }
+        }
+    }
+})
+
+lspconfig.pylsp.setup({
+    settings = {
+        pylsp = {
+            plugins = {
+                pycodestyle = {
+                    ignore = {'W391'},
+                    maxLineLength = 100
+                },
+                pyls_black = { enabled = true },
+				isort = { enabled = true, profile = "black" }
+            }
+        }
+    }
+})
 
 
 lspconfig.emmet_ls.setup({
