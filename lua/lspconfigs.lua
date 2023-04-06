@@ -130,7 +130,7 @@ local capabilities = require("cmp_nvim_lsp").default_capabilities()
 local lspconfig = require('lspconfig')
 
 -- Enable some language servers with the additional completion capabilities offered by nvim-cmp
-local servers = {'astro','clangd','html','cssls','tailwindcss', 'rust_analyzer','lua_ls', 'gopls', 'pyright','pylsp', 'tsserver', 'svelte', 'emmet_ls','phpactor', 'intelephense', 'dockerls' }
+local servers = {'astro','clangd','html','cssls','tailwindcss', 'rust_analyzer','lua_ls', 'gopls', 'pylsp', 'tsserver', 'svelte', 'emmet_ls','phpactor', 'intelephense', 'dockerls' }
 
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {
@@ -151,17 +151,21 @@ lspconfig.lua_ls.setup({
 
 lspconfig.pylsp.setup({
     settings = {
-        pylsp = {
-            plugins = {
-                pycodestyle = {
-                    ignore = {'W391'},
-                    maxLineLength = 100
-                },
-                pyls_black = { enabled = true },
-				isort = { enabled = true, profile = "black" }
-            }
+        configurationSources = {"flake8"},
+        formatCommand = {"black"},
+        plugins = {
+            pycodestyle = {
+                ignore = {'W391'},
+                maxLineLength = 100
+            },
+            black = {
+                enabled = true,
+                line_length = 100
+            },
+            pyls_black = { enabled = true },
+            isort = { enabled = true, profile = "black" }
         }
-    }
+}
 })
 
 
