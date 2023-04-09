@@ -105,8 +105,12 @@ require('packer').startup(function(use)
         'godlygeek/tabular',
         'preservim/vim-markdown',
     }
-    use({ "iamcco/markdown-preview.nvim", run = "cd app && npm install",
-        setup = function() vim.g.mkdp_filetypes = { "markdown" } end, ft = { "markdown" }, })
+    use({
+        "iamcco/markdown-preview.nvim",
+        run = "cd app && npm install",
+        setup = function() vim.g.mkdp_filetypes = { "markdown" } end,
+        ft = { "markdown" },
+    })
     use {
         'folke/zen-mode.nvim',
         config = function()
@@ -115,10 +119,10 @@ require('packer').startup(function(use)
                     width = 90,
                     options = {
                         -- signcolumn = "no", -- disable signcolumn
-                        number = false, -- disable number column
+                        number = false,         -- disable number column
                         relativenumber = false, -- disable relative numbers
-                        cursorline = false, -- disable cursorline
-                        cursorcolumn = false, -- disable cursor column
+                        cursorline = false,     -- disable cursorline
+                        cursorcolumn = false,   -- disable cursor column
                         -- foldcolumn = "0", -- disable fold column
                         -- list = false, -- disable whitespace characters
                     }

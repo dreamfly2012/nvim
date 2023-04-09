@@ -135,11 +135,10 @@ local lspconfig = require('lspconfig')
 
 -- Enable some language servers with the additional completion capabilities offered by nvim-cmp
 local servers = { 'astro', 'clangd', 'html', 'cssls', 'tailwindcss', 'rust_analyzer', 'lua_ls', 'gopls', 'pylsp',
-    'tsserver', 'svelte', 'emmet_ls', 'phpactor', 'intelephense', 'dockerls' }
+    'pyright', 'tsserver', 'svelte', 'emmet_ls', 'phpactor', 'intelephense', 'dockerls' }
 
 for _, lsp in ipairs(servers) do
     lspconfig[lsp].setup {
-        on_attach = on_attach,
         capabilities = capabilities,
     }
 end
@@ -149,27 +148,6 @@ lspconfig.lua_ls.setup({
         Lua = {
             diagnostics = {
                 globals = { 'vim' }
-            }
-        }
-    }
-})
-
-lspconfig.pylsp.setup({
-    -- on_attach = on_attach,
-    capabilities = capabilities,
-    settings = {
-        pylsp = {
-            plugins = {
-                pycodestyle = {
-                    ignore = { 'W391' },
-                    maxLineLength = 100
-                },
-                black = {
-                    enabled = true,
-                    line_length = 100
-                },
-                pyls_black = { enabled = true },
-                isort = { enabled = true, profile = "black" }
             }
         }
     }
