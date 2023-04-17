@@ -185,7 +185,8 @@ treesitter.setup {
         "http",
         "yaml",
         "html",
-        "scss"
+        "scss",
+        "css"
     }
 }
 
