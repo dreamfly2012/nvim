@@ -27,6 +27,9 @@ require('packer').startup(function(use)
         "williamboman/mason-lspconfig.nvim",
         "neovim/nvim-lspconfig",
     }
+    use {
+        "folke/neodev.nvim"
+    }
     use 'lervag/vimtex'
     use {
         'hrsh7th/cmp-nvim-lsp',
