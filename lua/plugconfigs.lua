@@ -67,7 +67,13 @@ require('telescope').setup {
             -- filetypes whitelist
             -- defaults to {"png", "jpg", "mp4", "webm", "pdf"}
             filetypes = { "png", "webp", "jpg", "jpeg" },
-            find_cmd = "rg" -- find command (defaults to `fd`)
+            find_cmd = "rg"           -- find command (defaults to `fd`)
+        },
+        fzf = {
+            fuzzy = true,             -- false will only do exact matching
+            override_generic_sorter = true, -- override the generic sorter
+            override_file_sorter = true, -- override the file sorter
+            case_mode = "smart_case", -- or "ignore_case" or "respect_case"
         }
     }
 }
@@ -202,13 +208,10 @@ end
 nvim_tree.setup {
     disable_netrw                      = false,
     hijack_netrw                       = true,
-    open_on_setup                      = false,
-    ignore_buffer_on_setup             = false,
-    ignore_ft_on_setup                 = {},
     auto_reload_on_write               = true,
     open_on_tab                        = false,
     hijack_cursor                      = false,
-    update_cwd                         = false,
+    update_cwd                         = true,
     hijack_unnamed_buffer_when_opening = false,
     hijack_directories                 = {
         enable = true,

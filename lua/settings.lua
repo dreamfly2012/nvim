@@ -1,5 +1,4 @@
 vim.cmd "colorscheme dracula"
-vim.o.clipboard = "unnamedplus"
 vim.o.number = true
 vim.o.textwidth = 80
 vim.o.mouse = 'a'
@@ -17,7 +16,7 @@ vim.o.ai = true
 vim.o.si = true
 vim.o.title = true
 vim.o.titlestring = "%<%F - nvim"
-vim.o.completeopt= "menu,menuone,noselect"
+vim.o.completeopt= "menu,preview,menuone,noselect"
 vim.o.cursorline = true
 vim.g.copilot_no_tab_map = true
 vim.g.copilot_assume_mapped = true
