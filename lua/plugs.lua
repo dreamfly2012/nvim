@@ -27,6 +27,16 @@ require('packer').startup(function(use)
         "williamboman/mason-lspconfig.nvim",
         "neovim/nvim-lspconfig",
     }
+    use {
+        'numToStr/Comment.nvim',
+        config = function()
+            require('Comment').setup()
+        end
+    }
+    use {
+        "folke/neodev.nvim"
+    }
+    use 'liuchengxu/vista.vim'
     use 'lervag/vimtex'
     use {
         'hrsh7th/cmp-nvim-lsp',
