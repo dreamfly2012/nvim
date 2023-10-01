@@ -2,7 +2,7 @@ local ensure_packer = function()
     local fn = vim.fn
     local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
     if fn.empty(fn.glob(install_path)) > 0 then
-        fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
+        fn.system({ 'git', 'clone', '--depth', '1', 'git@github.com:wbthomason/packer.nvim', install_path })
         vim.cmd [[packadd packer.nvim]]
         return true
     end
@@ -28,8 +28,15 @@ require('packer').startup(function(use)
         "neovim/nvim-lspconfig",
     }
     use {
+        'numToStr/Comment.nvim',
+        config = function()
+            require('Comment').setup()
+        end
+    }
+    use {
         "folke/neodev.nvim"
     }
+    use 'liuchengxu/vista.vim'
     use 'lervag/vimtex'
     use {
         'hrsh7th/cmp-nvim-lsp',

@@ -2,7 +2,7 @@ return {
     adapters = {
         type='executable',
         command = 'node',
-        args = {os.getenv("HOME") .. "/.config/nvim/lua/dap/vscode-php-debug/out/phpDebug.js"},
+        args = {os.getenv("HOME") .. "/vscode-php-debug/out/phpDebug.js"},
     },
     configurations = {
         {

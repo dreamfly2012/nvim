@@ -54,6 +54,52 @@ options = {
   extensions = {}
 })
 
+
+-- comment plugin
+require('Comment').setup({
+    ---Add a space b/w comment and the line
+    padding = true,
+    ---Whether the cursor should stay at its position
+    sticky = true,
+    ---Lines to be ignored while (un)comment
+    ignore = nil,
+    ---LHS of toggle mappings in NORMAL mode
+    toggler = {
+        ---Line-comment toggle keymap
+        line = 'gcc',
+        ---Block-comment toggle keymap
+        block = 'gbc',
+    },
+    ---LHS of operator-pending mappings in NORMAL and VISUAL mode
+    opleader = {
+        ---Line-comment keymap
+        line = 'gc',
+        ---Block-comment keymap
+        block = 'gb',
+    },
+    ---LHS of extra mappings
+    extra = {
+        ---Add comment on the line above
+        above = 'gcO',
+        ---Add comment on the line below
+        below = 'gco',
+        ---Add comment at the end of line
+        eol = 'gcA',
+    },
+    ---Enable keybindings
+    ---NOTE: If given `false` then the plugin won't create any mappings
+    mappings = {
+        ---Operator-pending mapping; `gcc` `gbc` `gc[count]{motion}` `gb[count]{motion}`
+        basic = true,
+        ---Extra mapping; `gco`, `gcO`, `gcA`
+        extra = true,
+    },
+    ---Function to call before (un)comment
+    pre_hook = nil,
+    ---Function to call after (un)comment
+    post_hook = nil,
+})
+
 require 'nvim-web-devicons'.setup {
     -- your personnal icons can go here (to override)
     -- you can specify color or cterm_color instead of specifying both of them
@@ -106,7 +152,13 @@ require('telescope').setup {
             -- filetypes whitelist
             -- defaults to {"png", "jpg", "mp4", "webm", "pdf"}
             filetypes = { "png", "webp", "jpg", "jpeg" },
-            find_cmd = "rg" -- find command (defaults to `fd`)
+            find_cmd = "rg"           -- find command (defaults to `fd`)
+        },
+        fzf = {
+            fuzzy = true,             -- false will only do exact matching
+            override_generic_sorter = true, -- override the generic sorter
+            override_file_sorter = true, -- override the file sorter
+            case_mode = "smart_case", -- or "ignore_case" or "respect_case"
         }
     }
 }
@@ -224,7 +276,8 @@ treesitter.setup {
         "http",
         "yaml",
         "html",
-        "scss"
+        "scss",
+        "css"
     }
 }
 
@@ -240,13 +293,10 @@ end
 nvim_tree.setup {
     disable_netrw                      = false,
     hijack_netrw                       = true,
-    open_on_setup                      = false,
-    ignore_buffer_on_setup             = false,
-    ignore_ft_on_setup                 = {},
     auto_reload_on_write               = true,
     open_on_tab                        = false,
     hijack_cursor                      = false,
-    update_cwd                         = false,
+    update_cwd                         = true,
     hijack_unnamed_buffer_when_opening = false,
     hijack_directories                 = {
         enable = true,

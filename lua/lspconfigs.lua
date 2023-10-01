@@ -127,9 +127,6 @@ cmp.setup.cmdline(':', {
     })
 })
 
-require("neodev").setup({
-  -- add any options here, or leave empty to use the default settings
-})
 require("mason").setup()
 require("mason-lspconfig").setup()
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
@@ -138,7 +135,7 @@ local lspconfig = require('lspconfig')
 
 -- Enable some language servers with the additional completion capabilities offered by nvim-cmp
 local servers = { 'astro', 'clangd', 'html', 'cssls', 'tailwindcss', 'rust_analyzer', 'lua_ls', 'gopls', 'pylsp',
-    'pyright', 'tsserver', 'svelte', 'emmet_ls', 'phpactor', 'intelephense', 'dockerls' }
+    'pyright', 'tsserver', 'svelte', 'emmet_ls', 'intelephense', 'dockerls' }
 
 for _, lsp in ipairs(servers) do
     lspconfig[lsp].setup {
