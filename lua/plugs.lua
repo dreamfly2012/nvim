@@ -1,127 +1,79 @@
-local ensure_packer = function()
-    local fn = vim.fn
-    local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
-    if fn.empty(fn.glob(install_path)) > 0 then
-        fn.system({ 'git', 'clone', '--depth', '1', 'git@github.com:wbthomason/packer.nvim', install_path })
-        vim.cmd [[packadd packer.nvim]]
-        return true
-    end
-    return false
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+    vim.fn.system({
+        "git",
+        "clone",
+        "--filter=blob:none",
+        "git@github.com:folke/lazy.nvim",
+        "--branch=stable", -- latest stable release
+        lazypath,
+    })
 end
+vim.opt.rtp:prepend(lazypath)
 
-local packer_bootstrap = ensure_packer()
-
-require('packer').init({
-    git = {
-        default_url_format = 'git@github.com:%s'
-    }
-})
-require('packer').startup(function(use)
-    use 'wbthomason/packer.nvim'
-    use {
-        "windwp/nvim-autopairs",
-        config = function() require("nvim-autopairs").setup {} end
-    }
-    use {
-        "williamboman/mason.nvim",
-        "williamboman/mason-lspconfig.nvim",
-        "neovim/nvim-lspconfig",
-    }
-    use {
-        'numToStr/Comment.nvim',
-        config = function()
-            require('Comment').setup()
-        end
-    }
-    use {
-        "folke/neodev.nvim"
-    }
-    use 'liuchengxu/vista.vim'
-    use 'lervag/vimtex'
-    use {
-        'hrsh7th/cmp-nvim-lsp',
-        'hrsh7th/cmp-buffer',
-        'hrsh7th/cmp-path',
-        'hrsh7th/cmp-cmdline',
-        'hrsh7th/nvim-cmp',
-        'L3MON4D3/LuaSnip',
-        'saadparwaiz1/cmp_luasnip'
-    }
-    use {
-        'jwalton512/vim-blade'
-    }
-    use {
-        'nvim-tree/nvim-web-devicons'
-    }
-    -- formatter
-    --use { 'mhartington/formatter.nvim' }
-    -- use { 'MunifTanjim/prettier.nvim' }
-    -- terminal
-    use { "akinsho/toggleterm.nvim", tag = '*', config = function()
-        require("toggleterm").setup()
-    end }
-    -- copy
-    use { "ojroques/vim-oscyank" }
-    use {
-        "nvim-neotest/neotest",
-        requires = {
-            "nvim-lua/plenary.nvim",
-            "nvim-treesitter/nvim-treesitter",
-            "antoinemadec/FixCursorHold.nvim",
-            'olimorris/neotest-phpunit',
-        }
-    }
+require("lazy").setup({
+    "windwp/nvim-autopairs",
+    "williamboman/mason.nvim",
+    "williamboman/mason-lspconfig.nvim",
+    "neovim/nvim-lspconfig",
+    'numToStr/Comment.nvim',
+    "folke/neodev.nvim",
+    'liuchengxu/vista.vim',
+    "lervag/vimtex",
+    'hrsh7th/cmp-nvim-lsp',
+    'hrsh7th/cmp-buffer',
+    'hrsh7th/cmp-path',
+    'hrsh7th/cmp-cmdline',
+    'hrsh7th/nvim-cmp',
+    'L3MON4D3/LuaSnip',
+    'saadparwaiz1/cmp_luasnip',
+    'jwalton512/vim-blade',
+    'nvim-tree/nvim-web-devicons',
+    'mhartington/formatter.nvim',
+    'MunifTanjim/prettier.nvim',
+    "akinsho/toggleterm.nvim",
+    "ojroques/vim-oscyank",
+    "nvim-neotest/neotest",
+    "nvim-lua/plenary.nvim",
+    {"nvim-treesitter/nvim-treesitter", build = ":TSUpdate"},
+    "antoinemadec/FixCursorHold.nvim",
+    'olimorris/neotest-phpunit',
     --theme
-    use {
-        'dracula/vim',
-    }
-    use {
-        'nvim-telescope/telescope.nvim', tag = '0.1.0',
-        -- or                            , branch = '0.1.x',
-        requires = { {
-            'nvim-lua/plenary.nvim',
-            'nvim-lua/popup.nvim',
-        } }
-    }
+    'dracula/vim',
+    'nvim-telescope/telescope.nvim',
+    'nvim-lua/popup.nvim',
     -- code runner
-    use { 'michaelb/sniprun', run = 'bash install.sh' }
-    -- screenshot
-    use { 'asamonik/nvim-screenshot', run = 'go build' }
-    use { 'segeljakt/vim-silicon' }
-    use {
-        'ekickx/clipboard-image.nvim'
-    }
-    use {
+    { 'michaelb/sniprun',         build = 'bash install.sh' },
+    { 'asamonik/nvim-screenshot', build = 'go build' },
+    'segeljakt/vim-silicon',
+
+    'ekickx/clipboard-image.nvim',
+
+    {
         'othree/html5.vim'
-    }
-    use {
+    },
+    {
         'voldikss/vim-translator'
-    }
-    use {
+    },
+    {
         'pangloss/vim-javascript'
-    }
-    use {
-        'evanleck/vim-svelte', branch = 'main'
-    }
-    use {
+    },
+    {
+        'evanleck/vim-svelte'
+    },
+    {
         'nvim-lualine/lualine.nvim',
         requires = { 'kyazdani42/nvim-web-devicons', opt = true }
-    }
-    use {
+    },
+    {
         'hotoo/pangu.vim'
-    }
+    },
     -- markdown
-    use {
+    {
         'godlygeek/tabular',
         'preservim/vim-markdown',
-    }
-    use({
-        "iamcco/markdown-preview.nvim",
-        run = "cd app && npm install",
-        setup = function() vim.g.mkdp_filetypes = { "markdown" } end,
-        ft = { "markdown" },
-    })
-    use {
+    },
+    {
         'folke/zen-mode.nvim',
         config = function()
             require("zen-mode").setup {
@@ -139,22 +91,22 @@ require('packer').startup(function(use)
                 }
             }
         end
-    }
-    use {
+    },
+    {
         "folke/twilight.nvim",
         config = function()
             require("twilight").setup {
             }
         end
-    }
-    use {
+    },
+    {
         "mfussenegger/nvim-dap",
         config = function()
             require("dap.nvim-dap")
         end
-    }
+    },
     -- 为代码调试提供内联文本
-    use {
+    {
         "theHamsta/nvim-dap-virtual-text",
         requires = {
             "mfussenegger/nvim-dap"
@@ -162,9 +114,9 @@ require('packer').startup(function(use)
         config = function()
             require("dap.nvim-dap-virtual-text")
         end
-    }
+    },
     -- 为代码调试提供 UI 界面
-    use {
+    {
         "rcarriga/nvim-dap-ui",
         requires = {
             "mfussenegger/nvim-dap"
@@ -172,37 +124,66 @@ require('packer').startup(function(use)
         config = function()
             require("dap.nvim-dap-ui")
         end
-    }
-    use {
-        'mattn/emmet-vim'
-    }
-    use {
-        'junegunn/fzf',
-        'junegunn/fzf.vim'
-    }
-    use {
-        'windwp/nvim-ts-autotag'
-    }
-    use { "ellisonleao/glow.nvim" }
-    use {
+    },
+    'mattn/emmet-vim',
+    'junegunn/fzf',
+    'junegunn/fzf.vim',
+    'windwp/nvim-ts-autotag',
+    "ellisonleao/glow.nvim",
+    {
         'kyazdani42/nvim-tree.lua',
         requires = {
             'kyazdani42/nvim-web-devicons',
         },
         config = function() require 'nvim-tree'.setup {} end
-    }
-    use { 'tami5/lspsaga.nvim' }
-    use {
+    },
+    { 'tami5/lspsaga.nvim' },
+    {
         'crispgm/nvim-go',
         requires = {
             'nvim-lua/plenary.nvim',
             'nvim-lua/popup.nvim'
         },
         config = function() require 'go'.setup {} end
-    }
-    use { 'nvim-treesitter/nvim-treesitter' }
-    use { 'nvim-lua/lsp-status.nvim' }
-    if packer_bootstrap then
-        require('packer').sync()
-    end
-end)
+    },
+    { 'nvim-treesitter/nvim-treesitter' },
+    { 'nvim-lua/lsp-status.nvim' },
+    "SDGLBL/nvim-sync.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
+    config = function()
+      require("nvim-sync").setup {
+        -- sync_exe_filename default name of the sync executable
+        sync_exe_filename = ".sync",
+        -- enable_paths
+        enable_paths = {},
+        -- sync_exe_path path to the sync executable
+        -- if not set, it will be searched in the project root path by default
+        -- if not found, it will be searched in the system path
+        -- if not found, it will return an error
+        sync_exe_path = nil,
+        -- Methods of detecting the root directory.
+        -- if one is not detected, the other is used as fallback. You can also delete or rearangne the detection methods.
+        detection_methods = { "pattern", "lsp" },
+        -- All the patterns used to detect root dir, when **"pattern"** is in
+        -- detection_methods
+        patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "package.json" },
+        -- Table of lsp clients to ignore by name
+        -- eg: { "efm", ... }
+        ignore_lsp = {},
+      }
+    end,
+}, {
+    git = {
+        -- defaults for the `Lazy log` command
+        -- log = { "-10" }, -- show the last 10 commits
+        log = { "-8" }, -- show commits from the last 3 days
+        timeout = 120, -- kill processes that take more than 2 minutes
+        url_format = "git@github.com:%s.git",
+        -- lazy.nvim requires git >=2.19.0. If you really want to use lazy with an older version,
+        -- then set the below to false. This should work, but is NOT supported and will
+        -- increase downloads a lot.
+        filter = true,
+    },
+})
