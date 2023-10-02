@@ -113,13 +113,13 @@ require('telescope').setup {
             -- filetypes whitelist
             -- defaults to {"png", "jpg", "mp4", "webm", "pdf"}
             filetypes = { "png", "webp", "jpg", "jpeg" },
-            find_cmd = "rg"           -- find command (defaults to `fd`)
+            find_cmd = "rg" -- find command (defaults to `fd`)
         },
         fzf = {
-            fuzzy = true,             -- false will only do exact matching
+            fuzzy = true,                   -- false will only do exact matching
             override_generic_sorter = true, -- override the generic sorter
-            override_file_sorter = true, -- override the file sorter
-            case_mode = "smart_case", -- or "ignore_case" or "respect_case"
+            override_file_sorter = true,    -- override the file sorter
+            case_mode = "smart_case",       -- or "ignore_case" or "respect_case"
         }
     }
 }
@@ -208,12 +208,10 @@ require("nvim-treesitter.install").prefer_git = true
 for _, config in pairs(require("nvim-treesitter.parsers").get_parser_configs()) do
     config.install_info.url = config.install_info.url:gsub("https://github.com/", "git@github.com:")
 end
-local status, treesitter = pcall(require, "nvim-treesitter.configs")
-if (not status) then
-    return
-end
 
-treesitter.setup {
+local nvim_treesitter_configs = require("nvim-treesitter.configs")
+
+nvim_treesitter_configs.setup {
     highlight = {
         enable = true,
         disable = {}
@@ -239,7 +237,8 @@ treesitter.setup {
         "html",
         "scss",
         "css"
-    }
+    },
+    auto_install = false,
 }
 
 require("toggleterm").setup {
@@ -295,10 +294,6 @@ nvim_tree.setup {
         hide_root_folder = false,
         side = 'left',
         preserve_window_proportions = true,
-        mappings = {
-            custom_only = false,
-            list = {}
-        },
         number = false,
         relativenumber = false,
         signcolumn = "yes"
