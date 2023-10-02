@@ -43,7 +43,6 @@ require("lazy").setup({
     'nvim-telescope/telescope.nvim',
     'nvim-lua/popup.nvim',
     -- code runner
-    { 'michaelb/sniprun',         build = 'bash install.sh' },
     { 'asamonik/nvim-screenshot', build = 'go build' },
     'segeljakt/vim-silicon',
 
