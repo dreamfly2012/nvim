@@ -33,3 +33,8 @@ map('n', 'tdh',"<cmd>lua require('neotest').diagnostic.hide() <cr>",{})
 -- nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
 -- nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
 --  nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
+
+-- oscyank
+--
+map('v',"yy","<cmd>OSCYankVisual<cr>",{noremap = true})
+map('n',"<C-a>","ggVG", {noremap = true})
