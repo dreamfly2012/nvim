@@ -1,5 +1,4 @@
 vim.cmd "colorscheme dracula"
-vim.g.mapleader = " "
 vim.o.number = true
 vim.o.textwidth = 80
 vim.o.mouse = 'a'
