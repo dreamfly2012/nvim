@@ -28,3 +28,10 @@ vim.g.vim_markdown_folding_disabled = 1
 vim.g.mkdp_open_to_the_world = 1
 vim.g.mkdp_echo_preview_url = 1
 vim.o.undofile=true
+
+vim.api.nvim_create_autocmd({'BufNewFile','BufRead'},{
+    pattern = "*.hbs",
+    callback = function()
+        vim.bo.filetype = 'html'
+    end,
+})
