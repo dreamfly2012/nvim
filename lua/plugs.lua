@@ -35,7 +35,14 @@ require("lazy").setup({
     'MunifTanjim/prettier.nvim',
     "akinsho/toggleterm.nvim",
     "ojroques/vim-oscyank",
-    "nvim-neotest/neotest",
+    {"nvim-neotest/neotest",
+    dependencies = {
+    "nvim-neotest/nvim-nio",
+    "nvim-lua/plenary.nvim",
+    "antoinemadec/FixCursorHold.nvim",
+    "nvim-treesitter/nvim-treesitter"
+  }
+    },
     "nvim-lua/plenary.nvim",
     { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
     "antoinemadec/FixCursorHold.nvim",
