@@ -129,6 +129,13 @@ require('telescope').setup {
                 preview_cutoff = 0,
             },
         },
+        -- 配置 fd 来替代 find, fzf 会使用 fd 来查找文件
+        find_command = { "fd", "--type", "f", "--strip-cwd-prefix", "--hidden", "--exclude", ".git" },
+
+        -- 排除不需要的目录和文件类型
+        file_ignore_patterns = {
+            "node_modules", "venv", ".git", "__pycache__", "%.pyc", "%.lock", "dist", "build"
+        },
         mappings = {
             i = {
                 -- map actions.which_key to <C-h> (default: <C-/>)
