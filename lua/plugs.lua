@@ -18,7 +18,7 @@ require("lazy").setup({
     "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
     "neovim/nvim-lspconfig",
-    'numToStr/Comment.nvim',
+    -- 'numToStr/Comment.nvim',
     "folke/neodev.nvim",
     'liuchengxu/vista.vim',
     "lervag/vimtex",
