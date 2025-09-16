@@ -140,10 +140,21 @@ local lspconfig = require('lspconfig')
 lspconfig.lua_ls.setup({
     settings = {
         Lua = {
+            runtime = {
+                -- 告诉 LSP 用 LuaJIT 语法
+                version = "LuaJIT",
+            },
             diagnostics = {
-                globals = { 'vim' }
-            }
-        }
+                globals = { "vim" },
+            },
+            workspace = {
+                library = vim.api.nvim_get_runtime_file("", true),
+                checkThirdParty = false, -- 避免弹 annoying 提示
+            },
+            telemetry = {
+                enable = false,
+            },
+        },
     }
 })
 

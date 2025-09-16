@@ -24,7 +24,6 @@ require("lazy").setup({
     },
     -- 'numToStr/Comment.nvim',
     "folke/neodev.nvim",
-    'liuchengxu/vista.vim',
     "lervag/vimtex",
     'hrsh7th/cmp-nvim-lsp',
     'hrsh7th/cmp-buffer',
