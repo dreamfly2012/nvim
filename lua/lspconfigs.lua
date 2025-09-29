@@ -129,7 +129,7 @@ cmp.setup.cmdline(':', {
 
 require("mason").setup()
 require("mason-lspconfig").setup{
-    ensure_installed = { 'astro', 'clangd', 'html', 'cssls', 'tailwindcss', 'rust_analyzer', 'lua_ls', 'gopls', 'pyright', 'ts_ls', 'svelte', 'emmet_ls', 'intelephense', 'dockerls' },
+    ensure_installed = { 'astro', 'clangd', 'html', 'cssls', 'tailwindcss', 'rust_analyzer',  'gopls', 'pyright', 'ts_ls', 'svelte', 'emmet_ls', 'intelephense', 'dockerls' },
     }
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
@@ -137,26 +137,28 @@ local lspconfig = require('lspconfig')
 
 -- Enable some language servers with the additional completion capabilities offered by nvim-cmp
 
-lspconfig.lua_ls.setup({
-    settings = {
-        Lua = {
-            runtime = {
-                -- 告诉 LSP 用 LuaJIT 语法
-                version = "LuaJIT",
-            },
-            diagnostics = {
-                globals = { "vim" },
-            },
-            workspace = {
-                library = vim.api.nvim_get_runtime_file("", true),
-                checkThirdParty = false, -- 避免弹 annoying 提示
-            },
-            telemetry = {
-                enable = false,
-            },
-        },
-    }
-})
+
+require("lspconfig").lua_ls.setup {
+  settings = {
+    Lua = {
+      runtime = {
+        -- Neovim 内置 Lua 是 LuaJIT
+        version = "LuaJIT",
+      },
+      diagnostics = {
+        globals = { "vim" }, -- 让 vim 不再报未定义
+      },
+      workspace = {
+        library = vim.api.nvim_get_runtime_file("", true), -- 加载 Neovim runtime
+        checkThirdParty = false, -- 不用第三方提示
+      },
+      telemetry = {
+        enable = false,
+      },
+    },
+  },
+}
+
 
 
 lspconfig.emmet_ls.setup({
