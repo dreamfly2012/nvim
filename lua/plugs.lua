@@ -4,11 +4,20 @@ if not vim.loop.fs_stat(lazypath) then
         "git",
         "clone",
         "--filter=blob:none",
-        "git@github.com:folke/lazy.nvim",
+        "https://github.com/folke/lazy.nvim",
         "--branch=stable", -- latest stable release
         lazypath,
     })
 end
+if vim.v.shell_error ~= 0 then
+    vim.api.nvim_echo({
+      { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+      { out, "WarningMsg" },
+      { "\nPress any key to exit..." },
+    }, true, {})
+    vim.fn.getchar()
+    os.exit(1)
+  end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
@@ -140,7 +149,6 @@ require("lazy").setup({
         },
         config = function() require 'nvim-tree'.setup {} end
     },
-    { 'tami5/lspsaga.nvim' },
     {
         "ray-x/go.nvim",
         dependencies = {  -- optional packages

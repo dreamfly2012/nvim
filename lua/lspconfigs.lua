@@ -138,7 +138,7 @@ local lspconfig = require('lspconfig')
 -- Enable some language servers with the additional completion capabilities offered by nvim-cmp
 
 
-require("lspconfig").lua_ls.setup {
+vim.lsp.config("lua_ls", {
   settings = {
     Lua = {
       runtime = {
@@ -157,11 +157,11 @@ require("lspconfig").lua_ls.setup {
       },
     },
   },
-}
+})
 
 
 
-lspconfig.emmet_ls.setup({
+vim.lsp.config("emmet_ls",{
     -- on_attach = on_attach,
     capabilities = capabilities,
     filetypes = { 'svelte', 'html', 'typescriptreact', 'javascriptreact', 'css', 'sass', 'scss', 'less' },
