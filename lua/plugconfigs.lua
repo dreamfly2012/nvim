@@ -165,7 +165,12 @@ local ts_parsers = {
 }
 
 pcall(function()
-    require("nvim-treesitter.install").prefer_git = true
+    local ts_install = require("nvim-treesitter.install")
+    ts_install.prefer_git = true
+    -- Windows 上未安装 MSVC(cl.exe) 时, 优先使用 gcc(scoop 安装)
+    if vim.fn.executable("cl.exe") ~= 1 then
+        ts_install.compilers = { "gcc", "clang", "cc" }
+    end
 end)
 
 local ok_master, ts_configs = pcall(require, "nvim-treesitter.configs")
