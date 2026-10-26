@@ -1,5 +1,13 @@
--- pacman -S delve
--- go install github.com/go-delve/delve/cmd/dlv@latest
+-- 调试器优先用 Mason 自动安装的 delve, 未安装则回退到 PATH 里的 dlv
+-- 回退安装: go install github.com/go-delve/delve/cmd/dlv@latest
+local mason = require("dap._mason")
+local dlv_cmd
+if mason.installed("delve") then
+    dlv_cmd = mason.root("delve") .. (mason.windows and "/dlv.exe" or "/dlv")
+else
+    dlv_cmd = "dlv"
+end
+
 return {
     adapters = function(callback, _) -- _ = config
         local stdout = vim.uv.new_pipe(false)
@@ -13,7 +21,7 @@ return {
         }
         handle, pid_or_err =
             vim.uv.spawn(
-            "dlv",
+            dlv_cmd,
             opts,
             function(code)
                 stdout:close()

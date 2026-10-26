@@ -134,6 +134,16 @@ require("lazy").setup({
             require("dap.nvim-dap")
         end
     },
+    -- 桥接 mason 与 nvim-dap, 负责自动下载 (ensure_installed) 调试器.
+    -- 不设 handlers: 保留 lua/dap/*.lua 里自定义的 adapters/configurations,
+    -- 这里只做安装. setup() 调用放在 lspconfigs.lua 的 mason.setup 之后.
+    {
+        "jay-babu/mason-nvim-dap.nvim",
+        dependencies = {
+            "mason-org/mason.nvim",
+            "mfussenegger/nvim-dap",
+        },
+    },
     -- 为代码调试提供内联文本
     {
         "theHamsta/nvim-dap-virtual-text",

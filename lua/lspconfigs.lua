@@ -154,7 +154,42 @@ cmp.setup.cmdline(':', {
 })
 
 -- ------------------------- LSP servers -----------------------------------
+-- 走本机代理下载 (与 git config 一致).
+-- 注意: mason.setup{ env = ... } 不是 mason 的有效配置项 —— 它只会被塞进
+-- settings 却无人读取, 且不报错, 代理会静默失效. mason 走 spawn.curl 下载,
+-- 该调用不传 env, 子进程继承 Neovim 环境, curl 读取 HTTPS_PROXY 才真正生效.
+-- 只在代理端口可达时注入: 代理没开就什么都不做, 不会连累 git/其他子进程.
+do
+    local alive, done = false, false
+    local tcp = vim.uv.new_tcp()
+    if tcp then
+        tcp:connect("127.0.0.1", 10808, function(err)
+            alive = (err == nil or err == 0)
+            done = true
+        end)
+        vim.wait(300, function() return done end, 10)
+        tcp:close()
+    end
+    if alive then
+        local proxy = "http://127.0.0.1:10808"
+        -- 大小写都设: curl/git 两种都认, 其他工具各取所需.
+        -- NO_PROXY 保护本地流量 (LSP/debugger 的 loopback 通信) 不被带进代理.
+        vim.env.HTTP_PROXY = proxy
+        vim.env.HTTPS_PROXY = proxy
+        vim.env.http_proxy = proxy
+        vim.env.https_proxy = proxy
+        vim.env.NO_PROXY = "localhost,127.0.0.1,::1"
+        vim.env.no_proxy = "localhost,127.0.0.1,::1"
+    end
+end
 require("mason").setup()
+-- mason-nvim-dap: 桥接 mason 与 nvim-dap, 启动时自动下载 ensure_installed 里的调试器.
+-- 只做安装, 不设 handlers => 不会覆盖 lua/dap/*.lua 里自定义的 adapters/configurations.
+-- 注意: 必须在上面 require("mason").setup() 之后调用 (要读 mason 注册表和代理 env).
+--       ensure_installed 用 nvim-dap 适配器名 (python/php/...), 不是 mason 包名.
+require("mason-nvim-dap").setup {
+    ensure_installed = {"codelldb", "python", "php", "delve"},
+}
 -- mason-lspconfig v2 默认 automatic_enable = true: 所有通过 mason 安装的
 -- language server 会被自动 vim.lsp.enable(), 下面 vim.lsp.config() 的配置
 -- 会与 nvim-lspconfig 自带的默认配置合并

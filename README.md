@@ -173,10 +173,13 @@ nvim-tree 内：`Enter/o` 打开，`a` 新建，`d` 删除，`r` 重命名，`y/
 | `<F3>` | 重复上次调试 |
 | `<F12>` | 退出调试（关闭 UI 和内联文本） |
 
-调试器需要单独安装：Go 用 delve（`go install github.com/go-delve/delve/cmd/dlv@latest`）、
-Python 用 debugpy（`python3 -m pip install debugpy`）、PHP 用 vscode-php-debug、
-C/C++ 随仓库带的 `OpenDebugAD7` 是 Linux 二进制，Windows 请改装
-[codelldb](https://github.com/vadimcn/codelldb) 并修改 `lua/dap/cpp.lua`。
+调试器由 `mason-nvim-dap` 启动时自动安装（见 `lua/lspconfigs.lua` 里的
+`ensure_installed`）：C/C++ 用 codelldb、Python 用 debugpy、PHP 用
+php-debug-adapter、Go 用 delve，全部经 mason 下载到
+`stdpath('data')/mason/packages/`。各 `lua/dap/*.lua` 优先调用 mason 版本，
+若未安装则回退到系统路径（如 `python -m pip install debugpy`、
+`go install github.com/go-delve/delve/cmd/dlv@latest`）。
+C/C++ 随仓库带的 `OpenDebugAD7` 是 Linux 二进制，仅在未装 codelldb 时回退使用。
 
 ### 测试（neotest）
 
