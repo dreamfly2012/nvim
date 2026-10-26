@@ -15,20 +15,22 @@ vim.o.ai = true
 vim.o.si = true
 vim.o.title = true
 vim.o.titlestring = "%<%F - nvim"
-vim.o.completeopt= "menu,preview,menuone,noselect"
+-- nvim-cmp 推荐的补全选项
+vim.o.completeopt = "menuone,noselect"
 vim.o.cursorline = true
-vim.g.copilot_no_tab_map = true
-vim.g.copilot_assume_mapped = true
-vim.g.copilot_tab_fallback = ""
-vim.g.translator_default_engines = {"bing","haici"}
+vim.o.signcolumn = "yes"
+vim.o.updatetime = 250
+vim.g.translator_default_engines = { "bing", "haici" }
 vim.g.translator_target_lang = "zh"
-vim.g.vim_markdown_fenced_languages = {"vim","js=javascript","go=golang","php","ts","lua","java","python","c","cpp"}
+vim.g.vim_markdown_fenced_languages = { "vim", "js=javascript", "go=golang", "php", "ts", "lua", "java", "python", "c", "cpp" }
 vim.g.vim_markdown_folding_disabled = 1
 vim.g.mkdp_open_to_the_world = 1
 vim.g.mkdp_echo_preview_url = 1
-vim.o.undofile=true
-vim.cmd.colorscheme('default')
-vim.api.nvim_create_autocmd({'BufNewFile','BufRead'},{
+vim.g.mkdp_filetypes = { "markdown" }
+vim.o.undofile = true
+-- 主题缺失(比如还没执行 :Lazy sync)时不要报错
+pcall(vim.cmd.colorscheme, 'default')
+vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
     pattern = "*.hbs",
     callback = function()
         vim.bo.filetype = 'html'

@@ -2,7 +2,8 @@ return {
     adapters = {
         type='executable',
         command = 'node',
-        args = {os.getenv("HOME") .. "/vscode-php-debug/out/phpDebug.js"},
+        -- 跨平台的 home 目录, Windows 上 $HOME 通常不存在
+        args = {vim.fn.expand('~/vscode-php-debug/out/phpDebug.js')},
     },
     configurations = {
         {

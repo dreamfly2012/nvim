@@ -2,7 +2,8 @@
 return {
     adapters = {
         type = "executable",
-        command = "python3",
+        -- Windows 上的命令是 python, 其他平台通常是 python3
+        command = (vim.fn.has('win32') == 1 or vim.fn.has('win64') == 1) and "python" or "python3",
         args = {"-m", "debugpy.adapter"}
     },
     configurations = {

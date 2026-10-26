@@ -1,8 +1,28 @@
 local opts = { noremap = true, silent = true }
 vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
+vim.keymap.set('n', '[d', function()
+    if vim.diagnostic.jump then
+        vim.diagnostic.jump({ count = -1, float = true })
+    else
+        vim.diagnostic.goto_prev()
+    end
+end, opts)
+vim.keymap.set('n', ']d', function()
+    if vim.diagnostic.jump then
+        vim.diagnostic.jump({ count = 1, float = true })
+    else
+        vim.diagnostic.goto_next()
+    end
+end, opts)
 vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
+
+-- 诊断显示(取代早期版本里对 vim.lsp.diagnostic handler 的覆盖)
+vim.diagnostic.config({
+    underline = true,
+    severity_sort = true,
+    virtual_text = { spacing = 2 },
+    float = { border = 'rounded' },
+})
 
 -- Use LspAttach autocommand to only map the following keys
 -- after the language server attaches to the current buffer
@@ -14,45 +34,49 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
         -- Buffer local mappings.
         -- See `:help vim.lsp.*` for documentation on any of the below functions
-        opts = { buffer = ev.buf }
-        vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
-        vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-        vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-        vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
-        vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
-        vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
-        vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, opts)
+        local bufopts = { buffer = ev.buf, silent = true }
+        vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
+        vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+        vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
+        vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
+        vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
+        vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
+        vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
         vim.keymap.set('n', '<space>wl', function()
             print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-        end, opts)
-        vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
-        vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
-        vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, opts)
-        vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+        end, bufopts)
+        vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
+        vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
+        vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
+        vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
         vim.keymap.set('n', '<space>f', function()
             vim.lsp.buf.format { async = true }
-        end, opts)
+        end, bufopts)
     end,
 })
-local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+
+-- ------------------------- nvim-cmp --------------------------------------
 local has_words_before = function()
-    unpack = unpack or table.unpack
+    local unpack = unpack or table.unpack
     local line, col = unpack(vim.api.nvim_win_get_cursor(0))
     return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
-
 
 local feedkey = function(key, mode)
     vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
 end
 
-local luasnip = require('luasnip')
+local ok_luasnip, luasnip = pcall(require, 'luasnip')
+local ok_cmp, cmp = pcall(require, 'cmp')
+if not (ok_luasnip and ok_cmp) then
+    return
+end
 
-local cmp = require 'cmp'
-cmp.event:on(
-    'confirm_done',
-    cmp_autopairs.on_confirm_done()
-)
+local ok_autopairs, cmp_autopairs = pcall(require, 'nvim-autopairs.completion.cmp')
+if ok_autopairs then
+    cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
+end
+
 -- nvim-cmp setup
 cmp.setup {
     snippet = {
@@ -68,7 +92,7 @@ cmp.setup {
         ['<C-b>'] = cmp.mapping.scroll_docs(-4),
         ['<C-f>'] = cmp.mapping.scroll_docs(4),
         ['<C-Space>'] = cmp.mapping.complete(),
-        ['<C-e'] = cmp.mapping.abort(),
+        ['<C-e>'] = cmp.mapping.abort(),
         ['<CR>'] = cmp.mapping.confirm {
             -- behavior = cmp.ConfirmBehavior.Replace,
             select = true,
@@ -97,6 +121,8 @@ cmp.setup {
     sources = {
         { name = 'nvim_lsp' },
         { name = 'luasnip' },
+        { name = 'buffer' },
+        { name = 'path' },
     },
 }
 -- Set configuration for specific filetype.
@@ -127,50 +153,64 @@ cmp.setup.cmdline(':', {
     })
 })
 
+-- ------------------------- LSP servers -----------------------------------
 require("mason").setup()
-require("mason-lspconfig").setup{
-    ensure_installed = { 'astro', 'clangd', 'html', 'cssls', 'tailwindcss', 'rust_analyzer',  'gopls', 'pyright', 'ts_ls', 'svelte', 'emmet_ls', 'intelephense', 'dockerls' },
-    }
-local capabilities = require("cmp_nvim_lsp").default_capabilities()
-
-local lspconfig = require('lspconfig')
-
--- Enable some language servers with the additional completion capabilities offered by nvim-cmp
-
-
-vim.lsp.config("lua_ls", {
-  settings = {
-    Lua = {
-      runtime = {
-        -- Neovim 内置 Lua 是 LuaJIT
-        version = "LuaJIT",
-      },
-      diagnostics = {
-        globals = { "vim" }, -- 让 vim 不再报未定义
-      },
-      workspace = {
-        library = vim.api.nvim_get_runtime_file("", true), -- 加载 Neovim runtime
-        checkThirdParty = false, -- 不用第三方提示
-      },
-      telemetry = {
-        enable = false,
-      },
+-- mason-lspconfig v2 默认 automatic_enable = true: 所有通过 mason 安装的
+-- language server 会被自动 vim.lsp.enable(), 下面 vim.lsp.config() 的配置
+-- 会与 nvim-lspconfig 自带的默认配置合并
+require("mason-lspconfig").setup {
+    ensure_installed = {
+        'lua_ls', 'astro', 'clangd', 'html', 'cssls', 'tailwindcss',
+        'rust_analyzer', 'gopls', 'pyright', 'ts_ls', 'svelte',
+        'emmet_ls', 'intelephense', 'dockerls',
     },
-  },
-})
+}
 
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+do
+    local ok_cmp_lsp, cmp_lsp = pcall(require, "cmp_nvim_lsp")
+    if ok_cmp_lsp then
+        capabilities = cmp_lsp.default_capabilities()
+    end
+end
 
+-- 所有 language server 都带上 nvim-cmp 的补全能力
+if vim.lsp.config then
+    vim.lsp.config('*', { capabilities = capabilities })
+end
 
-vim.lsp.config("emmet_ls",{
-    -- on_attach = on_attach,
-    capabilities = capabilities,
-    filetypes = { 'svelte', 'html', 'typescriptreact', 'javascriptreact', 'css', 'sass', 'scss', 'less' },
-    init_options = {
-        html = {
-            options = {
-                -- For possible options, see: https://github.com/emmetio/emmet/blob/master/src/config.ts#L79-L267
-                ["bem.enabled"] = true,
+if vim.lsp.config then
+    vim.lsp.config("lua_ls", {
+        settings = {
+            Lua = {
+                runtime = {
+                    -- Neovim 内置 Lua 是 LuaJIT
+                    version = "LuaJIT",
+                },
+                diagnostics = {
+                    globals = { "vim" }, -- 让 vim 不再报未定义
+                },
+                workspace = {
+                    library = vim.api.nvim_get_runtime_file("", true), -- 加载 Neovim runtime
+                    checkThirdParty = false, -- 不用第三方提示
+                },
+                telemetry = {
+                    enable = false,
+                },
             },
         },
-    }
-})
+    })
+
+    vim.lsp.config("emmet_ls", {
+        capabilities = capabilities,
+        filetypes = { 'svelte', 'html', 'typescriptreact', 'javascriptreact', 'css', 'sass', 'scss', 'less' },
+        init_options = {
+            html = {
+                options = {
+                    -- For possible options, see: https://github.com/emmetio/emmet/blob/master/src/config.ts#L79-L267
+                    ["bem.enabled"] = true,
+                },
+            },
+        }
+    })
+end

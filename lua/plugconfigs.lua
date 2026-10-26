@@ -14,47 +14,45 @@ npairs.setup({
 })
 
 require 'lualine'.setup({
-options = {
-    icons_enabled = true,
-    theme = 'auto',
-    component_separators = { left = '', right = ''},
-    section_separators = { left = '', right = ''},
-    disabled_filetypes = {
-      statusline = {},
-      winbar = {},
+    options = {
+        icons_enabled = true,
+        theme = 'auto',
+        component_separators = { left = '', right = '' },
+        section_separators = { left = '', right = '' },
+        disabled_filetypes = {
+            statusline = {},
+            winbar = {},
+        },
+        ignore_focus = {},
+        always_divide_middle = true,
+        globalstatus = false,
+        refresh = {
+            statusline = 1000,
+            tabline = 1000,
+            winbar = 1000,
+        }
     },
-    ignore_focus = {},
-    always_divide_middle = true,
-    globalstatus = false,
-    refresh = {
-      statusline = 1000,
-      tabline = 1000,
-      winbar = 1000,
-    }
-  },
-  sections = {
-    lualine_a = {'mode'},
-    lualine_b = {'branch', 'diff', 'diagnostics'},
-    lualine_c = {'filename'},
-    lualine_x = {'encoding', 'fileformat', 'filetype'},
-    lualine_y = {'progress'},
-    lualine_z = {'location'}
-  },
-  inactive_sections = {
-    lualine_a = {},
-    lualine_b = {},
-    lualine_c = {'filename'},
-    lualine_x = {'location'},
-    lualine_y = {},
-    lualine_z = {}
-  },
-  tabline = {},
-  winbar = {},
-  inactive_winbar = {},
-  extensions = {}
+    sections = {
+        lualine_a = { 'mode' },
+        lualine_b = { 'branch', 'diff', 'diagnostics' },
+        lualine_c = { 'filename' },
+        lualine_x = { 'encoding', 'fileformat', 'filetype' },
+        lualine_y = { 'progress' },
+        lualine_z = { 'location' }
+    },
+    inactive_sections = {
+        lualine_a = {},
+        lualine_b = {},
+        lualine_c = { 'filename' },
+        lualine_x = { 'location' },
+        lualine_y = {},
+        lualine_z = {}
+    },
+    tabline = {},
+    winbar = {},
+    inactive_winbar = {},
+    extensions = {}
 })
-
-
 
 require 'nvim-web-devicons'.setup {
     -- your personnal icons can go here (to override)
@@ -62,7 +60,7 @@ require 'nvim-web-devicons'.setup {
     -- DevIcon will be appended to `name`
     override = {
         zsh = {
-            icon = "",
+            icon = "",
             color = "#428850",
             cterm_color = "65",
             name = "Zsh"
@@ -76,6 +74,13 @@ require 'nvim-web-devicons'.setup {
     default = true,
 }
 
+-- find_files 优先使用 fd(速度快), 没装 fd 时回退到 telescope 内置的 find
+local find_command = nil
+if vim.fn.executable('fd') == 1 or vim.fn.executable('fdfind') == 1 then
+    local fd = vim.fn.executable('fd') == 1 and 'fd' or 'fdfind'
+    find_command = { fd, '--type', 'f', '--strip-cwd-prefix', '--hidden', '--exclude', '.git' }
+end
+
 require('telescope').setup {
     defaults = {
         -- Default configuration for telescope goes here:
@@ -85,8 +90,8 @@ require('telescope').setup {
                 preview_cutoff = 0,
             },
         },
-        -- 配置 fd 来替代 find, fzf 会使用 fd 来查找文件
-        find_command = { "fd", "--type", "f", "--strip-cwd-prefix", "--hidden", "--exclude", ".git" },
+        -- 配置 fd 来替代 find
+        find_command = find_command,
 
         -- 排除不需要的目录和文件类型
         file_ignore_patterns = {
@@ -129,16 +134,16 @@ require('telescope').setup {
 local neotest = require 'neotest'
 neotest.setup({
     icons = {
-        expanded = "",
+        expanded = "",
         child_prefix = "",
         child_indent = "",
         final_child_prefix = "",
         non_collapsible = "",
-        collapsed = "",
-        passed = "",
-        running = "",
-        failed = "",
-        unknown = ""
+        collapsed = "",
+        passed = "",
+        running = "",
+        failed = "",
+        unknown = ""
     },
     adapters = {
         require('neotest-phpunit')({
@@ -149,95 +154,113 @@ neotest.setup({
     }
 })
 
+-- ------------------------- treesitter -------------------------------------
+-- 兼容两个版本的 nvim-treesitter:
+--   * master 分支 (Neovim <= 0.11): require("nvim-treesitter.configs")
+--   * main   分支 (Neovim >= 0.12): require("nvim-treesitter") + install()
+local ts_parsers = {
+    "tsx", "astro", "python", "c", "cpp", "toml", "javascript", "php", "go",
+    "json", "http", "yaml", "html", "scss", "css", "lua", "vim", "vimdoc",
+    "bash", "markdown", "markdown_inline", "query",
+}
 
+pcall(function()
+    require("nvim-treesitter.install").prefer_git = true
+end)
 
-local opts = { noremap = true, silent = true }
-vim.api.nvim_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
-vim.api.nvim_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
-vim.api.nvim_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
-vim.api.nvim_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
+local ok_master, ts_configs = pcall(require, "nvim-treesitter.configs")
+if ok_master then
+    ts_configs.setup({
+        highlight = {
+            enable = true,
+            disable = {},
+        },
+        indent = {
+            enable = false,
+            disable = {},
+        },
+        ensure_installed = ts_parsers,
+        auto_install = false,
+    })
+else
+    local ok_ts, ts = pcall(require, "nvim-treesitter")
+    if ok_ts then
+        ts.setup({
+            install_dir = vim.fn.stdpath("data") .. "/site",
+        })
+        -- parser 名称与 filetype 的对应关系
+        pcall(vim.treesitter.language.register, "tsx", { "typescriptreact" })
+        pcall(vim.treesitter.language.register, "javascript", { "javascriptreact" })
 
+        if vim.fn.executable('tree-sitter') == 1 then
+            pcall(ts.install, ts_parsers)
+        else
+            vim.schedule(function()
+                vim.notify(
+                    "[config] tree-sitter CLI 未安装: treesitter 高亮不可用, 安装方法见 README.md",
+                    vim.log.levels.INFO,
+                    { title = "nvim config" }
+                )
+            end)
+        end
 
-require("nvim-treesitter.install").prefer_git = true
+        -- main 分支的高亮需要按 filetype 手动开启
+        vim.api.nvim_create_autocmd('FileType', {
+            pattern = {
+                "tsx", "astro", "python", "c", "cpp", "toml", "javascript",
+                "javascriptreact", "typescript", "typescriptreact", "php",
+                "go", "json", "http", "yaml", "html", "scss", "css", "lua",
+                "vim", "vimdoc", "bash", "markdown",
+            },
+            group = vim.api.nvim_create_augroup('TreesitterHighlight', { clear = true }),
+            callback = function(ev)
+                -- 解析器未安装时静默跳过
+                pcall(vim.treesitter.start, ev.buf)
+            end,
+        })
+    end
+end
 
-require("nvim-treesitter").setup({
-    highlight = {
-        enable = true,
-        disable = {},
-    },
-    indent = {
-        enable = false,
-        disable = {},
-    },
-    ensure_installed = {
-        "tsx",
-        "astro",
-        "python",
-        "c",
-        "cpp",
-        "toml",
-        "javascript",
-        "php",
-        "go",
-        "json",
-        "http",
-        "yaml",
-        "html",
-        "scss",
-        "css",
-        -- removed duplicate "python"
-    },
-    auto_install = false,
-})
 require("toggleterm").setup {
     open_mapping = [[<c-\>]],
     direction = "float",
 }
 
+-- ------------------------- nvim-tree --------------------------------------
 local status, nvim_tree = pcall(require, "nvim-tree")
 if (not status) then
     return
 end
-nvim_tree.setup {
-    disable_netrw                      = false,
-    hijack_netrw                       = true,
-    auto_reload_on_write               = true,
-    open_on_tab                        = false,
-    hijack_cursor                      = false,
-    update_cwd                         = true,
+nvim_tree.setup({
+    sync_root_with_cwd = true,
+    reload_on_bufenter = true,
+    disable_netrw = false,
+    hijack_netrw = true,
+    auto_reload_on_write = true,
+    open_on_tab = false,
+    hijack_cursor = false,
     hijack_unnamed_buffer_when_opening = false,
-    hijack_directories                 = {
+    hijack_directories = {
         enable = true,
-        auto_open = true,
     },
-    diagnostics                        = {
+    diagnostics = {
         enable = false,
-        icons = {
-            hint = "",
-            info = "",
-            warning = "",
-            error = "",
-        }
     },
-    update_focused_file                = {
-        enable      = false,
-        update_cwd  = false,
+    update_focused_file = {
+        enable = true,
+        update_root = false,
         ignore_list = {}
     },
-    system_open                        = {
-        cmd  = nil,
-        args = {}
-    },
-    filters                            = {
+    filters = {
         dotfiles = false,
-        custom = {}
+        custom = { "^\\.git$" }
     },
-    git                                = {
+    git = {
         enable = true,
         ignore = true,
         timeout = 500,
     },
-    view                               = {
+    view = {
         width = 25,
         side = 'left',
         preserve_window_proportions = true,
@@ -245,11 +268,14 @@ nvim_tree.setup {
         relativenumber = false,
         signcolumn = "yes"
     },
-    trash                              = {
-        cmd = "trash",
-        require_confirm = true
+    -- Windows 没有 trash 命令, 用 PowerShell 回收站代替
+    trash = {
+        cmd = (vim.fn.has('win32') == 1 or vim.fn.has('win64') == 1)
+            and "powershell Remove-Item -Recurse -Force"
+            or "trash",
+        require_confirm = true,
     },
-    actions                            = {
+    actions = {
         change_dir = {
             enable = true,
             global = false,
@@ -262,18 +288,9 @@ nvim_tree.setup {
                 chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
                 exclude = {
                     filetype = { "notify", "packer", "qf", "diff", "fugitive", "fugitiveblame", },
-                    buftype  = { "nofile", "terminal", "help", },
+                    buftype = { "nofile", "terminal", "help", },
                 }
             }
         }
     },
-    log                                = {
-        enable = false,
-        truncate = false,
-        types = {
-            all = false,
-            config = false,
-            git = false,
-        },
-    },
-}
+})

@@ -2,7 +2,7 @@
 -- go install github.com/go-delve/delve/cmd/dlv@latest
 return {
     adapters = function(callback, _) -- _ = config
-        local stdout = vim.loop.new_pipe(false)
+        local stdout = vim.uv.new_pipe(false)
         local handle
         local pid_or_err
         local port = 38697
@@ -12,7 +12,7 @@ return {
             detached = true
         }
         handle, pid_or_err =
-            vim.loop.spawn(
+            vim.uv.spawn(
             "dlv",
             opts,
             function(code)

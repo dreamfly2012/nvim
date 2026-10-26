@@ -1,7 +1,9 @@
 return {
     adapters = {
         type = 'executable',
-        command = '/home/dreamfly/.config/nvim/lua/dap/OpenDebugAD7',
+        -- OpenDebugAD7 是随配置仓库分发的 Linux 二进制, Windows 用户请改用
+        -- codelldb (https://github.com/vadimcn/codelldb)
+        command = vim.fn.stdpath('config') .. '/lua/dap/OpenDebugAD7',
         id = "cpp",
         name = "cpp"
     },
