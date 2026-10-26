@@ -81,7 +81,6 @@ require("lazy").setup({
     "olimorris/neotest-phpunit",
     "nvim-telescope/telescope.nvim",
     "othree/html5.vim",
-    "voldikss/vim-translator",
     "pangloss/vim-javascript",
     "evanleck/vim-svelte",
     {

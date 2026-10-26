@@ -20,8 +20,6 @@ vim.o.completeopt = "menuone,noselect"
 vim.o.cursorline = true
 vim.o.signcolumn = "yes"
 vim.o.updatetime = 250
-vim.g.translator_default_engines = { "bing", "haici" }
-vim.g.translator_target_lang = "zh"
 vim.g.vim_markdown_fenced_languages = { "vim", "js=javascript", "go=golang", "php", "ts", "lua", "java", "python", "c", "cpp" }
 vim.g.vim_markdown_folding_disabled = 1
 vim.g.mkdp_open_to_the_world = 1
